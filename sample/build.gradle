@@ -3,19 +3,18 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk 33
 
     compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibilityVersion
-        targetCompatibility rootProject.ext.targetCompatibilityVersion
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
         applicationId "com.liulishuo.okdownload.sample"
         // using 19, because we demo for content-uri(CATEGORY_OPENABLE)
-        minSdkVersion 19
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk 19
+        targetSdk 33
 
         versionCode 1
         versionName "1.0"
@@ -41,43 +40,45 @@ android {
 }
 
 dependencies {
-    implementation dep.kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
     //noinspection GradleDependency source code is not available on 26
-    implementation dep.supportDesign
+    implementation "com.android.support:design:28.0.0"
     //noinspection GradleDependency source code is not available on 26
-    implementation dep.supportV7
+    implementation "com.android.support:appcompat-v7:28.0.0"
     // Appcompat-v7 (only Anko Commons)
-    implementation dep.ankoSdk
-    implementation dep.ankoV7Commons
+    implementation "org.jetbrains.anko:anko-sdk25:0.10.1"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:0.10.1"
     // Appcompat-v7 (Anko Layouts)
-    implementation dep.ankoV7
-    implementation dep.ankoSdk25Coroutines
-    implementation dep.ankoCoroutines
+    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:0.10.1"
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:0.10.1"
+    implementation "org.jetbrains.anko:anko-coroutines:0.10.1"
     // CardView-v7
-    implementation dep.ankoCardviewV7
+    implementation "org.jetbrains.anko:anko-cardview-v7:0.10.1"
     //noinspection GradleDependency
-    implementation dep.supportCardview
+    implementation "com.android.support:cardview-v7:28.0.0"
     // Design
-    implementation dep.ankoDesign
-    implementation dep.ankoDesignCoroutines
+    implementation "org.jetbrains.anko:anko-design:0.10.1"
+    implementation "org.jetbrains.anko:anko-design-coroutines:0.10.1"
     // RecyclerView-v7
-    implementation dep.ankoRecyclerviewV7
-    implementation dep.ankoRecyclerviewV7Coroutines
-    implementation dep.kotlinxCoroutines
-    implementation dep.kotlinxCoroutineAndroid
-    implementation dep.supportConstraintLayout
-    testImplementation dep.junit
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:0.10.1"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7-coroutines:0.10.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    implementation "com.android.support.constraint:constraint-layout:1.0.2"
+
     implementation project(':okdownload')
-    implementation project(':sqlite')
-    implementation project(':okhttp')
-    implementation project(':filedownloader')
-    implementation project(':kotlin')
+    implementation project(':okdownload-breakpoint-sqlite')
+    implementation project(':okdownload-connection-okhttp')
+    implementation project(':okdownload-filedownloader')
+    implementation project(':okdownload-kotlin-enhance')
 
-    compileOnly dep.findbugsAnnotations
+    compileOnly "com.google.code.findbugs:annotations:3.0.1"
+
+    testImplementation 'junit:junit:4.12'
 }
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
+//kotlin {
+//    experimental {
+//        coroutines "enable"
+//    }
+//}

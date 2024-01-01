@@ -19,8 +19,8 @@ package com.liulishuo.okdownload.core.file;
 import android.net.Uri;
 import android.os.StatFs;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.liulishuo.okdownload.DownloadTask;
@@ -57,9 +57,9 @@ public class MultiPointOutputStream {
             60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(),
             Util.threadFactory("OkDownload file io", false));
 
-    final SparseArray<DownloadOutputStream> outputStreamMap = new SparseArray<>();
+    protected final SparseArray<DownloadOutputStream> outputStreamMap = new SparseArray<>();
 
-    final SparseArray<AtomicLong> noSyncLengthMap = new SparseArray<>();
+    protected final SparseArray<AtomicLong> noSyncLengthMap = new SparseArray<>();
     final AtomicLong allNoSyncLength = new AtomicLong();
     final AtomicLong lastSyncTimestamp = new AtomicLong();
     boolean canceled = false;

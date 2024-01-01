@@ -1,25 +1,24 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk 33
 
     compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibilityVersion
-        targetCompatibility rootProject.ext.targetCompatibilityVersion
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dexOptions {
-        preDexLibraries = !rootProject.ext.isCi
-    }
+//    dexOptions {
+//        preDexLibraries = !rootProject.ext.isCi
+//    }
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdk 14
     }
 }
 
 dependencies {
-    testImplementation dep.junit
-    testImplementation dep.mockito
-    testImplementation dep.assertj
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
+    testImplementation 'org.assertj:assertj-core:2.8.0'
 }

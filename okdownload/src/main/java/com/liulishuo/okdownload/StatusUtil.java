@@ -16,11 +16,12 @@
 
 package com.liulishuo.okdownload;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.core.breakpoint.BreakpointInfo;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointStore;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.dispatcher.DownloadDispatcher;
 
 import java.io.File;
@@ -45,8 +46,9 @@ public class StatusUtil {
     }
 
     public static Status getStatus(@NonNull String url, @NonNull String parentPath,
-                                   @Nullable String filename) {
-        return getStatus(createFinder(url, parentPath, filename));
+                                   @Nullable String filename,
+                                   @Nullable IBreakpointCompare breakpointCompare) {
+        return getStatus(createFinder(url, parentPath, filename, breakpointCompare));
     }
 
     public static boolean isCompleted(@NonNull DownloadTask task) {
@@ -90,17 +92,20 @@ public class StatusUtil {
     }
 
     public static boolean isCompleted(@NonNull String url, @NonNull String parentPath,
-                                      @Nullable String filename) {
-        return isCompleted(createFinder(url, parentPath, filename));
+                                      @Nullable String filename, @Nullable IBreakpointCompare breakpointCompare) {
+        return isCompleted(createFinder(url, parentPath, filename, breakpointCompare));
     }
 
-    @Nullable public static BreakpointInfo getCurrentInfo(@NonNull String url,
-                                                          @NonNull String parentPath,
-                                                          @Nullable String filename) {
-        return getCurrentInfo(createFinder(url, parentPath, filename));
+    @Nullable
+    public static BreakpointInfo getCurrentInfo(@NonNull String url,
+                                                @NonNull String parentPath,
+                                                @Nullable String filename,
+                                                @Nullable IBreakpointCompare breakpointCompare) {
+        return getCurrentInfo(createFinder(url, parentPath, filename, breakpointCompare));
     }
 
-    @Nullable public static BreakpointInfo getCurrentInfo(@NonNull DownloadTask task) {
+    @Nullable
+    public static BreakpointInfo getCurrentInfo(@NonNull DownloadTask task) {
         final BreakpointStore store = OkDownload.with().breakpointStore();
         final int id = store.findOrCreateId(task);
 
@@ -109,10 +114,12 @@ public class StatusUtil {
         return info == null ? null : info.copy();
     }
 
-    @NonNull static DownloadTask createFinder(@NonNull String url,
-                                              @NonNull String parentPath,
-                                              @Nullable String filename) {
-        return new DownloadTask.Builder(url, parentPath, filename)
+    @NonNull
+    static DownloadTask createFinder(@NonNull String url,
+                                     @NonNull String parentPath,
+                                     @Nullable String filename,
+                                     @Nullable IBreakpointCompare breakpointCompare) {
+        return new DownloadTask.Builder(url, parentPath, filename, breakpointCompare)
                 .build();
     }
 

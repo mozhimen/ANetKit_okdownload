@@ -20,10 +20,12 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.core.Util;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.cause.EndCause;
 import com.liulishuo.okdownload.core.listener.DownloadListener2;
 import com.liulishuo.okdownload.core.listener.DownloadListenerBunch;
@@ -51,7 +53,8 @@ public class DownloadContext {
 
     private final DownloadTask[] tasks;
     volatile boolean started = false;
-    @Nullable final DownloadContextListener contextListener;
+    @Nullable
+    final DownloadContextListener contextListener;
     private final QueueSet set;
     private Handler uiHandler;
 
@@ -115,7 +118,8 @@ public class DownloadContext {
             Collections.addAll(scheduleTaskList, tasks);
             Collections.sort(scheduleTaskList);
             executeOnSerialExecutor(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     for (DownloadTask task : scheduleTaskList) {
                         if (!isStarted()) {
                             callbackQueueEndOnSerialLoop(task.isAutoCallbackToUIThread());
@@ -147,7 +151,8 @@ public class DownloadContext {
         if (isAutoCallbackToUIThread) {
             if (uiHandler == null) uiHandler = new Handler(Looper.getMainLooper());
             uiHandler.post(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     contextListener.queueEnd(DownloadContext.this);
                 }
             });
@@ -201,13 +206,13 @@ public class DownloadContext {
             return this;
         }
 
-        public DownloadTask bind(@NonNull String url) {
+        public DownloadTask bind(@NonNull String url, IBreakpointCompare breakpointCompare) {
             if (set.uri == null) {
                 throw new IllegalArgumentException("If you want to bind only with url, you have to"
                         + " provide parentPath on QueueSet!");
             }
 
-            return bind(new DownloadTask.Builder(url, set.uri).setFilenameFromResponse(true));
+            return bind(new DownloadTask.Builder(url, set.uri, breakpointCompare).setFilenameFromResponse(true));
         }
 
         public DownloadTask bind(@NonNull DownloadTask.Builder taskBuilder) {
@@ -402,8 +407,10 @@ public class DownloadContext {
 
     static class QueueAttachListener extends DownloadListener2 {
         private final AtomicInteger remainCount;
-        @NonNull private final DownloadContextListener contextListener;
-        @NonNull private final DownloadContext hostContext;
+        @NonNull
+        private final DownloadContextListener contextListener;
+        @NonNull
+        private final DownloadContext hostContext;
 
         QueueAttachListener(@NonNull DownloadContext context,
                             @NonNull DownloadContextListener contextListener, int taskCount) {
@@ -412,7 +419,8 @@ public class DownloadContext {
             this.hostContext = context;
         }
 
-        @Override public void taskStart(@NonNull DownloadTask task) {
+        @Override
+        public void taskStart(@NonNull DownloadTask task) {
         }
 
         @Override

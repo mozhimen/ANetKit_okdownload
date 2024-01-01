@@ -16,8 +16,10 @@
 
 package com.liulishuo.okdownload.core.breakpoint;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.Util;
@@ -30,10 +32,13 @@ import java.util.List;
 public class BreakpointInfo {
     final int id;
     private final String url;
+    private final IBreakpointCompare breakpointCompare;
     private String etag;
 
-    @NonNull final File parentFile;
-    @Nullable private File targetFile;
+    @NonNull
+    final File parentFile;
+    @Nullable
+    private File targetFile;
     private final DownloadStrategy.FilenameHolder filenameHolder;
 
     private final List<BlockInfo> blockInfoList;
@@ -41,9 +46,10 @@ public class BreakpointInfo {
     private boolean chunked;
 
     public BreakpointInfo(int id, @NonNull String url, @NonNull File parentFile,
-                          @Nullable String filename) {
+                          @Nullable String filename, @Nullable IBreakpointCompare breakpointCompare) {
         this.id = id;
         this.url = url;
+        this.breakpointCompare = breakpointCompare;
         this.parentFile = parentFile;
         this.blockInfoList = new ArrayList<>();
 
@@ -58,9 +64,10 @@ public class BreakpointInfo {
     }
 
     BreakpointInfo(int id, @NonNull String url, @NonNull File parentFile,
-                   @Nullable String filename, boolean taskOnlyProvidedParentPath) {
+                   @Nullable String filename, boolean taskOnlyProvidedParentPath, IBreakpointCompare breakpointCompare) {
         this.id = id;
         this.url = url;
+        this.breakpointCompare = breakpointCompare;
         this.parentFile = parentFile;
         this.blockInfoList = new ArrayList<>();
 
@@ -160,7 +167,8 @@ public class BreakpointInfo {
         return url;
     }
 
-    @Nullable public String getFilename() {
+    @Nullable
+    public String getFilename() {
         return filenameHolder.get();
     }
 
@@ -168,7 +176,8 @@ public class BreakpointInfo {
         return filenameHolder;
     }
 
-    @Nullable public File getFile() {
+    @Nullable
+    public File getFile() {
         final String filename = this.filenameHolder.get();
         if (filename == null) return null;
         if (targetFile == null) targetFile = new File(parentFile, filename);
@@ -178,7 +187,7 @@ public class BreakpointInfo {
 
     public BreakpointInfo copy() {
         final BreakpointInfo info = new BreakpointInfo(id, url, parentFile, filenameHolder.get(),
-                taskOnlyProvidedParentPath);
+                taskOnlyProvidedParentPath, breakpointCompare);
         info.chunked = this.chunked;
         for (BlockInfo blockInfo : blockInfoList) {
             info.blockInfoList.add(blockInfo.copy());
@@ -188,7 +197,7 @@ public class BreakpointInfo {
 
     public BreakpointInfo copyWithReplaceId(int replaceId) {
         final BreakpointInfo info = new BreakpointInfo(replaceId, url, parentFile,
-                filenameHolder.get(), taskOnlyProvidedParentPath);
+                filenameHolder.get(), taskOnlyProvidedParentPath, breakpointCompare);
         info.chunked = this.chunked;
         for (BlockInfo blockInfo : blockInfoList) {
             info.blockInfoList.add(blockInfo.copy());
@@ -206,7 +215,7 @@ public class BreakpointInfo {
      */
     public BreakpointInfo copyWithReplaceIdAndUrl(int replaceId, String newUrl) {
         final BreakpointInfo info = new BreakpointInfo(replaceId, newUrl, parentFile,
-                filenameHolder.get(), taskOnlyProvidedParentPath);
+                filenameHolder.get(), taskOnlyProvidedParentPath, breakpointCompare);
         info.chunked = this.chunked;
         for (BlockInfo blockInfo : blockInfoList) {
             info.blockInfoList.add(blockInfo.copy());
@@ -214,27 +223,54 @@ public class BreakpointInfo {
         return info;
     }
 
+    private final static String TAG = "BreakpointInfo>>>>>";
+
     public boolean isSameFrom(DownloadTask task) {
         if (!parentFile.equals(task.getParentFile())) {
+            Log.d(TAG, "isSameFrom: parentFile.equals false");
             return false;
         }
 
-        if (!url.equals(task.getUrl())) return false;
+        if (breakpointCompare != null) {
+            String currentUrl = breakpointCompare.onCompareUrl(url);
+            String taskUrl = breakpointCompare.onCompareUrl(task.getUrl());
+            if (!currentUrl.equals(taskUrl)) {
+                Log.d(TAG, "isSameFrom: breakpointCompare currentUrl.equals false");
+                Log.d(TAG, "isSameFrom: currentUrl " + currentUrl);
+                Log.d(TAG, "isSameFrom: taskUrl___ " + taskUrl);
+                return false;
+            }
+        } else {
+            if (!url.equals(task.getUrl())) {
+                Log.d(TAG, "isSameFrom: url.equals false");
+                return false;
+            }
+        }
 
         final String otherFilename = task.getFilename();
-        if (otherFilename != null && otherFilename.equals(filenameHolder.get())) return true;
+        if (otherFilename != null && otherFilename.equals(filenameHolder.get())) {
+            Log.d(TAG, "isSameFrom: otherFilename.equals true");
+            return true;
+        }
 
         if (taskOnlyProvidedParentPath) {
             // filename is provided by response.
-            if (!task.isFilenameFromResponse()) return false;
+            if (!task.isFilenameFromResponse()) {
+                Log.d(TAG, "isSameFrom: task.isFilenameFromResponse false");
+                return false;
+            }
 
-            return otherFilename == null || otherFilename.equals(filenameHolder.get());
+            boolean res = otherFilename == null || otherFilename.equals(filenameHolder.get());
+            Log.d(TAG, "isSameFrom: otherFilename == null || otherFilename.equals(filenameHolder.get()) " + res);
+            return res;
         }
 
+        Log.d(TAG, "isSameFrom: last false");
         return false;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "id[" + id + "]" + " url[" + url + "]" + " etag[" + etag + "]"
                 + " taskOnlyProvidedParentPath[" + taskOnlyProvidedParentPath + "]"
                 + " parent path[" + parentFile + "]" + " filename[" + filenameHolder.get() + "]"

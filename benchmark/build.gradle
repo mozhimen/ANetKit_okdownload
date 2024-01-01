@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk 33
 
     compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibilityVersion
-        targetCompatibility rootProject.ext.targetCompatibilityVersion
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -18,8 +17,8 @@ android {
 
     defaultConfig {
         applicationId "com.liulishuo.okdownload.benchmark"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk 14
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -36,11 +35,12 @@ android {
 }
 
 dependencies {
-    implementation dep.kotlin
+//    implementation project('')
+//    implementation dep.kotlin
+//
+//    implementation dep.supportV7
+//    implementation dep.supportDesign
+//    implementation dep.supportConstraintLayout
 
-    implementation dep.supportV7
-    implementation dep.supportDesign
-    implementation dep.supportConstraintLayout
-
-    testImplementation dep.junit
+    testImplementation 'junit:junit:4.12'
 }

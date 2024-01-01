@@ -1,9 +1,41 @@
-rootProject.name = 'okdownload-root'
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core' }
+        maven { url 'https://raw.githubusercontent.com/saki4510t/libcommon/master/repository/' }
+        maven { url 'https://gitee.com/liuchaoya/libcommon/raw/master/repository/' }
+        maven { url "https://repo.eclipse.org/content/repositories/paho-snapshots/" }
+        maven { url 'https://developer.huawei.com/repo/' }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://www.jitpack.io' }
+        mavenCentral()
+        google()
+    }
+}
+rootProject.name = 'ANetKit_okdownload'
 
-include ':okdownload', ':process', ':okhttp', ':sqlite', ':kotlin', ':benchmark', ':filedownloader', 'sample'
+include ':okdownload'
+include ':okdownload-process'
+include ':okdownload-connection-okhttp'
+include ':okdownload-breakpoint-sqlite'
+include ':okdownload-kotlin-enhance'
+include ':okdownload-filedownloader'
+include ':okdownload_ext'
+include ':benchmark'
+include ':sample'
+//SwiftKit
+//include ':SwiftKit'
+//project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
+//include ':SwiftKit:basick'
 
-project(':process').projectDir = new File(settingsDir, 'okdownload-process')
-project(':okhttp').projectDir = new File(settingsDir, 'okdownload-connection-okhttp')
-project(':sqlite').projectDir = new File(settingsDir, 'okdownload-breakpoint-sqlite')
-project(':kotlin').projectDir = new File(settingsDir, 'okdownload-kotlin-enhance')
-project(':filedownloader').projectDir = new File(settingsDir, 'okdownload-filedownloader')
+//project(':process').projectDir = new File(settingsDir, 'okdownload-process')
+//project(':okhttp').projectDir = new File(settingsDir, 'okdownload-connection-okhttp')
+//project(':sqlite').projectDir = new File(settingsDir, 'okdownload-breakpoint-sqlite')
+//project(':kotlin').projectDir = new File(settingsDir, 'okdownload-kotlin-enhance')
+//project(':filedownloader').projectDir = new File(settingsDir, 'okdownload-filedownloader')
+

@@ -16,9 +16,12 @@
 
 package com.liulishuo.okdownload.core.breakpoint;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.util.SparseArray;
+
+import androidx.annotation.NonNull;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.IdentifiedTask;
@@ -34,7 +37,8 @@ public class BreakpointStoreOnCache implements DownloadStore {
     private final SparseArray<BreakpointInfo> storedInfos;
     private final HashMap<String, String> responseFilenameMap;
 
-    @NonNull private final KeyToIdMap keyToIdMap;
+    @NonNull
+    private final KeyToIdMap keyToIdMap;
 
     private final SparseArray<IdentifiedTask> unStoredTasks;
     private final List<Integer> sortedOccupiedIds;
@@ -82,12 +86,13 @@ public class BreakpointStoreOnCache implements DownloadStore {
         return storedInfos.get(id);
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public BreakpointInfo createAndInsert(@NonNull DownloadTask task) {
         final int id = task.getId();
 
         BreakpointInfo newInfo = new BreakpointInfo(id, task.getUrl(), task.getParentFile(),
-                task.getFilename());
+                task.getFilename(), task.getBreakCompare());
         synchronized (this) {
             storedInfos.put(id, newInfo);
             unStoredTasks.remove(id);
@@ -95,11 +100,13 @@ public class BreakpointStoreOnCache implements DownloadStore {
         return newInfo;
     }
 
-    @Override public void onTaskStart(int id) {
+    @Override
+    public void onTaskStart(int id) {
     }
 
-    @Override public void onSyncToFilesystemSuccess(@NonNull BreakpointInfo info, int blockIndex,
-                                                    long increaseLength) throws IOException {
+    @Override
+    public void onSyncToFilesystemSuccess(@NonNull BreakpointInfo info, int blockIndex,
+                                          long increaseLength) throws IOException {
         final BreakpointInfo onCacheOne = this.storedInfos.get(info.id);
         if (info != onCacheOne) throw new IOException("Info not on store!");
 
@@ -134,7 +141,9 @@ public class BreakpointStoreOnCache implements DownloadStore {
         }
     }
 
-    @Nullable @Override public BreakpointInfo getAfterCompleted(int id) {
+    @Nullable
+    @Override
+    public BreakpointInfo getAfterCompleted(int id) {
         return null;
     }
 
@@ -151,13 +160,15 @@ public class BreakpointStoreOnCache implements DownloadStore {
         return false;
     }
 
-    @Override public boolean markFileClear(int id) {
+    @Override
+    public boolean markFileClear(int id) {
         synchronized (fileDirtyList) {
             return fileDirtyList.remove(Integer.valueOf(id));
         }
     }
 
-    @Override public synchronized void remove(int id) {
+    @Override
+    public synchronized void remove(int id) {
         storedInfos.remove(id);
         if (unStoredTasks.get(id) == null) sortedOccupiedIds.remove(Integer.valueOf(id));
         keyToIdMap.remove(id);
@@ -166,7 +177,8 @@ public class BreakpointStoreOnCache implements DownloadStore {
     @Override
     public synchronized int findOrCreateId(@NonNull DownloadTask task) {
         final Integer candidate = keyToIdMap.get(task);
-        if (candidate != null) return candidate;
+        if (candidate != null)
+            return candidate;
 
         final int size = storedInfos.size();
         for (int i = 0; i < size; i++) {
@@ -180,7 +192,8 @@ public class BreakpointStoreOnCache implements DownloadStore {
         for (int i = 0; i < unStoredSize; i++) {
             final IdentifiedTask another = unStoredTasks.valueAt(i);
             if (another == null) continue;
-            if (another.compareIgnoreId(task)) return another.getId();
+            if (another.compareIgnoreId(task))
+                return another.getId();
         }
 
         final int id = allocateId();
@@ -210,15 +223,19 @@ public class BreakpointStoreOnCache implements DownloadStore {
         return null;
     }
 
-    @Override public boolean isOnlyMemoryCache() {
+    @Override
+    public boolean isOnlyMemoryCache() {
         return true;
     }
 
-    @Override public boolean isFileDirty(int id) {
+    @Override
+    public boolean isFileDirty(int id) {
         return fileDirtyList.contains(id);
     }
 
-    @Nullable @Override public String getResponseFilename(String url) {
+    @Nullable
+    @Override
+    public String getResponseFilename(String url) {
         return responseFilenameMap.get(url);
     }
 

@@ -72,21 +72,21 @@ public class StatusUtilTest {
         assertThat(file.exists()).isTrue();
 
         StatusUtil.Status status = StatusUtil
-                .getStatus(url, file.getParent(), file.getName());
+                .getStatus(url, file.getParent(), file.getName(),null);
         assertThat(status).isEqualTo(COMPLETED);
 
         // no filename
-        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null);
+        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null,null);
         assertThat(status).isEqualTo(UNKNOWN);
 
         final DownloadDispatcher dispatcher = OkDownload.with().downloadDispatcher();
         doReturn(true).when(dispatcher).isRunning(any(DownloadTask.class));
-        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null);
+        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null,null);
 
         assertThat(status).isEqualTo(RUNNING);
 
         doReturn(true).when(dispatcher).isPending(any(DownloadTask.class));
-        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null);
+        status = StatusUtil.getStatus(url, file.getParentFile().getPath(), null,null);
         assertThat(status).isEqualTo(PENDING);
     }
 
@@ -94,19 +94,19 @@ public class StatusUtilTest {
     public void isCompleted() throws IOException {
         assertThat(file.exists()).isFalse();
         boolean isCompleted = StatusUtil
-                .isCompleted(url, file.getParentFile().getPath(), file.getName());
+                .isCompleted(url, file.getParentFile().getPath(), file.getName(),null);
         assertThat(isCompleted).isFalse();
 
         file.getParentFile().mkdirs();
         file.createNewFile();
         isCompleted = StatusUtil
-                .isCompleted(url, file.getParentFile().getPath(), file.getName());
+                .isCompleted(url, file.getParentFile().getPath(), file.getName(),null);
         assertThat(isCompleted).isTrue();
 
         final BreakpointStore store = OkDownload.with().breakpointStore();
         doReturn(mock(BreakpointInfo.class)).when(store).get(anyInt());
         isCompleted = StatusUtil
-                .isCompleted(url, file.getParentFile().getPath(), file.getName());
+                .isCompleted(url, file.getParentFile().getPath(), file.getName(),null);
         assertThat(isCompleted).isFalse();
     }
 
@@ -207,12 +207,12 @@ public class StatusUtilTest {
 
     @Test
     public void createFinder() {
-        DownloadTask task = StatusUtil.createFinder(url, file.getParent(), null);
+        DownloadTask task = StatusUtil.createFinder(url, file.getParent(), null,null);
         assertThat(task.getFile()).isNull();
 
         assertFile(task.getParentFile()).isEqualTo(file.getParentFile());
 
-        task = StatusUtil.createFinder(url, file.getParent(), file.getName());
+        task = StatusUtil.createFinder(url, file.getParent(), file.getName(),null);
         assertFile(task.getFile()).isEqualTo(file);
     }
 
@@ -236,7 +236,7 @@ public class StatusUtilTest {
 
         doReturn(origin).when(store).get(anyInt());
 
-        StatusUtil.getCurrentInfo("https://jacksgong.com", "parentPath", "filename");
+        StatusUtil.getCurrentInfo("https://jacksgong.com", "parentPath", "filename",null);
         verify(origin).copy();
     }
 }

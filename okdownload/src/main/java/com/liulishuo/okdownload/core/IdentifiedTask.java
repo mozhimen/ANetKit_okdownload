@@ -16,8 +16,10 @@
 
 package com.liulishuo.okdownload.core;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 
 import java.io.File;
 
@@ -28,16 +30,29 @@ public abstract class IdentifiedTask {
 
     public abstract int getId();
 
-    @NonNull public abstract String getUrl();
+    @NonNull
+    public abstract String getUrl();
 
-    @NonNull protected abstract File getProvidedPathFile();
+    @NonNull
+    protected abstract File getProvidedPathFile();
 
-    @NonNull public abstract File getParentFile();
+    @NonNull
+    public abstract File getParentFile();
 
-    @Nullable public abstract String getFilename();
+    @Nullable
+    public abstract String getFilename();
+
+    @Nullable
+    public abstract IBreakpointCompare getBreakCompare();
 
     public boolean compareIgnoreId(IdentifiedTask another) {
-        if (!getUrl().equals(another.getUrl())) return false;
+        if (getBreakCompare() != null) {
+            String currentUrl = getBreakCompare().onCompareUrl(getUrl());
+            String anotherUrl = getBreakCompare().onCompareUrl(another.getUrl());
+            if (!currentUrl.equals(anotherUrl)) return false;
+        } else {
+            if (!getUrl().equals(another.getUrl())) return false;
+        }
 
         if (getUrl().equals(EMPTY_URL) || getParentFile().equals(EMPTY_FILE)) return false;
 

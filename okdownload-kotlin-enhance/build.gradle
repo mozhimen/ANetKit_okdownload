@@ -3,20 +3,19 @@ apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk 33
 
     compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibilityVersion
-        targetCompatibility rootProject.ext.targetCompatibilityVersion
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dexOptions {
-        preDexLibraries = !rootProject.ext.isCi
-    }
+//    dexOptions {
+//        preDexLibraries = !rootProject.ext.isCi
+//    }
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdk 14
     }
 
     sourceSets {
@@ -25,15 +24,15 @@ android {
 }
 
 dependencies {
-    testImplementation dep.junit
-    testImplementation dep.mockk
-    testImplementation dep.assertj
-    testImplementation project(':okdownload')
-    testImplementation dep.robolectric
-
-    implementation dep.kotlin
-    implementation dep.kotlinxCoroutines
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
     compileOnly project(':okdownload')
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
+    testImplementation 'org.assertj:assertj-core:2.8.0'
+    testImplementation 'org.robolectric:robolectric:3.3.2'
+    testImplementation project(':okdownload')
 }
 
 dokka {
@@ -46,7 +45,7 @@ tasks.withType(Javadoc).all {
     dependsOn dokka
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
 if (hasProperty("isCI")) {
     apply from: rootProject.file('gradle/codecov.gradle')
 }

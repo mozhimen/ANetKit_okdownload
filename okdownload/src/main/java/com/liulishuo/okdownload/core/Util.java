@@ -27,9 +27,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.StatFs;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.BuildConfig;
 import com.liulishuo.okdownload.DownloadTask;
@@ -38,6 +39,7 @@ import com.liulishuo.okdownload.core.breakpoint.BlockInfo;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointInfo;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointStoreOnCache;
 import com.liulishuo.okdownload.core.breakpoint.DownloadStore;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.connection.DownloadConnection;
 import com.liulishuo.okdownload.core.connection.DownloadUrlConnection;
 
@@ -94,13 +96,21 @@ public class Util {
     }
 
     public static class EmptyLogger implements Logger {
-        @Override public void e(String tag, String msg, Exception e) { }
+        @Override
+        public void e(String tag, String msg, Exception e) {
+        }
 
-        @Override public void w(String tag, String msg) { }
+        @Override
+        public void w(String tag, String msg) {
+        }
 
-        @Override public void d(String tag, String msg) { }
+        @Override
+        public void d(String tag, String msg) {
+        }
 
-        @Override public void i(String tag, String msg) { }
+        @Override
+        public void i(String tag, String msg) {
+        }
     }
 
     @SuppressWarnings("PMD.LoggerIsNotStaticFinal")
@@ -242,15 +252,15 @@ public class Util {
         return String.format(Locale.ENGLISH, "%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
 
-    public static @NonNull DownloadStore createDefaultDatabase(Context context) {
+    public static @NonNull DownloadStore createDefaultDatabase(Context context, IBreakpointCompare breakpointCompare) {
         // You can import through com.liulishuo.okdownload:sqlite:{version}
         final String storeOnSqliteClassName
                 = "com.liulishuo.okdownload.core.breakpoint.BreakpointStoreOnSQLite";
 
         try {
             final Constructor constructor = Class.forName(storeOnSqliteClassName)
-                    .getDeclaredConstructor(Context.class);
-            return (DownloadStore) constructor.newInstance(context);
+                    .getDeclaredConstructor(Context.class, IBreakpointCompare.class);
+            return (DownloadStore) constructor.newInstance(context, breakpointCompare);
         } catch (ClassNotFoundException ignored) {
         } catch (InstantiationException ignored) {
         } catch (IllegalAccessException ignored) {
@@ -377,7 +387,8 @@ public class Util {
         return uri.getScheme().equals(ContentResolver.SCHEME_FILE);
     }
 
-    @Nullable public static String getFilenameFromContentUri(@NonNull Uri contentUri) {
+    @Nullable
+    public static String getFilenameFromContentUri(@NonNull Uri contentUri) {
         final ContentResolver resolver = OkDownload.with().context().getContentResolver();
         final Cursor cursor = resolver.query(contentUri, null, null, null, null);
         if (cursor != null) {
@@ -394,7 +405,8 @@ public class Util {
     }
 
     @SuppressFBWarnings(value = "DMI")
-    @NonNull public static File getParentFile(final File file) {
+    @NonNull
+    public static File getParentFile(final File file) {
         final File candidate = file.getParentFile();
         return candidate == null ? new File("/") : candidate;
     }

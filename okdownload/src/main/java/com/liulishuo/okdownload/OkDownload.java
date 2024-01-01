@@ -18,12 +18,13 @@ package com.liulishuo.okdownload;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.core.Util;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointStore;
 import com.liulishuo.okdownload.core.breakpoint.DownloadStore;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.connection.DownloadConnection;
 import com.liulishuo.okdownload.core.dispatcher.CallbackDispatcher;
 import com.liulishuo.okdownload.core.dispatcher.DownloadDispatcher;
@@ -126,10 +127,16 @@ public class OkDownload {
         private DownloadStrategy downloadStrategy;
         private DownloadOutputStream.Factory outputStreamFactory;
         private DownloadMonitor monitor;
+        private IBreakpointCompare breakpointCompare;
         private final Context context;
 
         public Builder(@NonNull Context context) {
             this.context = context.getApplicationContext();
+        }
+
+        public Builder breakpointCompare(IBreakpointCompare breakpointCompare) {
+            this.breakpointCompare = breakpointCompare;
+            return this;
         }
 
         public Builder downloadDispatcher(DownloadDispatcher downloadDispatcher) {
@@ -182,7 +189,7 @@ public class OkDownload {
             }
 
             if (downloadStore == null) {
-                downloadStore = Util.createDefaultDatabase(context);
+                downloadStore = Util.createDefaultDatabase(context,breakpointCompare);
             }
 
             if (connectionFactory == null) {

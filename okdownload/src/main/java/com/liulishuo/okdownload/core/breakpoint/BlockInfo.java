@@ -16,13 +16,16 @@
 
 package com.liulishuo.okdownload.core.breakpoint;
 
-import android.support.annotation.IntRange;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 import static com.liulishuo.okdownload.core.Util.CHUNKED_CONTENT_LENGTH;
 
+import android.util.Log;
+
+import androidx.annotation.IntRange;
+
 public class BlockInfo {
+    private static final String TAG = "BlockInfo>>>>>";
     @IntRange(from = 0)
     private final long startOffset;
     @IntRange(from = 0)
@@ -34,6 +37,7 @@ public class BlockInfo {
     }
 
     public BlockInfo(long startOffset, long contentLength, @IntRange(from = 0) long currentOffset) {
+        Log.d(TAG, "BlockInfo: startOffset " + currentOffset + " contentLength " + contentLength + " currentOffset " + currentOffset);
         if (startOffset < 0 || (contentLength < 0 && contentLength != CHUNKED_CONTENT_LENGTH)
                 || currentOffset < 0) {
             throw new IllegalArgumentException();
@@ -76,7 +80,8 @@ public class BlockInfo {
         return new BlockInfo(startOffset, contentLength, currentOffset.get());
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "[" + startOffset + ", " + getRangeRight() + ")" + "-current:" + currentOffset;
     }
 }

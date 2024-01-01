@@ -84,7 +84,7 @@ public class BreakpointInfoRowTest {
 
     @Test
     public void toInfo() {
-        final BreakpointInfo info = breakpointInfoRow.toInfo();
+        final BreakpointInfo info = breakpointInfoRow.toInfo(null);
         assertThat(info.id).isEqualTo(10);
         assertThat(info.getUrl()).isEqualTo("url");
         assertThat(info.getEtag()).isEqualTo("etag");

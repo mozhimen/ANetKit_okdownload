@@ -68,7 +68,7 @@ public class DownloadTaskTest {
         final Uri mockFileUri = mock(Uri.class);
         when(mockFileUri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
         when(mockFileUri.getPath()).thenReturn("mock path");
-        DownloadTask.Builder builder = new DownloadTask.Builder(url, mockFileUri);
+        DownloadTask.Builder builder = new DownloadTask.Builder(url, mockFileUri,null);
 
 
         final String mockKey1 = "mock key1";
@@ -99,7 +99,7 @@ public class DownloadTaskTest {
         final Uri mockFileUri = mock(Uri.class);
         when(mockFileUri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
         when(mockFileUri.getPath()).thenReturn("mock path");
-        DownloadTask.Builder builder = new DownloadTask.Builder(url, mockFileUri);
+        DownloadTask.Builder builder = new DownloadTask.Builder(url, mockFileUri,null);
 
         final Map<String, List<String>> headerMap = new HashMap<>();
         builder.setHeaderMapFields(headerMap);
@@ -125,8 +125,8 @@ public class DownloadTaskTest {
     @Test
     public void enqueue() {
         final DownloadTask[] tasks = new DownloadTask[2];
-        tasks[0] = new DownloadTask.Builder("url1", "path", "filename1").build();
-        tasks[1] = new DownloadTask.Builder("url2", "path", "filename1").build();
+        tasks[0] = new DownloadTask.Builder("url1", "path", "filename1",null).build();
+        tasks[1] = new DownloadTask.Builder("url2", "path", "filename1",null).build();
 
         final DownloadListener listener = mock(DownloadListener.class);
         DownloadTask.enqueue(tasks, listener);
@@ -150,7 +150,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is provided
         DownloadTask task = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .setFilename(filename)
                 .build();
 
@@ -161,7 +161,7 @@ public class DownloadTaskTest {
         when(anotherUri.getPath()).thenReturn(parentPath + filename);
         when(anotherUri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
         DownloadTask anotherTask = new DownloadTask
-                .Builder("url", anotherUri)
+                .Builder("url", anotherUri,null)
                 .build();
         assertThat(task.equals(anotherTask)).isTrue();
 
@@ -169,7 +169,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is not provided
         anotherTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .build();
         // expect: not same
         assertThat(task.equals(anotherTask)).isFalse();
@@ -179,7 +179,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is provided and different
         anotherTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .setFilename("another-filename")
                 .build();
         // expect: not same
@@ -189,7 +189,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is not provided
         DownloadTask noFilenameTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .build();
 
         // filename is enabled by response
@@ -202,7 +202,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is provided
         anotherTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .setFilename("another-filename")
                 .build();
         assertThat(noFilenameTask.equals(anotherTask)).isFalse();
@@ -211,7 +211,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is not provided
         anotherTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .build();
 
         assertThat(noFilenameTask.equals(anotherTask)).isTrue();
@@ -220,7 +220,7 @@ public class DownloadTaskTest {
         // 1. uri is directory
         // 2. filename is provided and the same to the response-filename
         anotherTask = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .setFilename("response-filename")
                 .build();
         assertThat(noFilenameTask.equals(anotherTask)).isTrue();
@@ -234,7 +234,7 @@ public class DownloadTaskTest {
         when(uri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
 
         DownloadTask task = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .setFilename("filename1")
                 .build();
 
@@ -248,7 +248,7 @@ public class DownloadTaskTest {
         when(anotherUri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
         when(anotherUri.getPath()).thenReturn(parentPath + filename);
 
-        buildTask = task.toBuilder("anotherUrl", anotherUri).build();
+        buildTask = task.toBuilder("anotherUrl", anotherUri, null).build();
         assertThat(buildTask.getUrl()).isEqualTo("anotherUrl");
         assertThat(buildTask.getUri()).isEqualTo(anotherUri);
         assertThat(buildTask.getFilename()).isEqualTo(filename);
@@ -256,9 +256,9 @@ public class DownloadTaskTest {
         // same uri provided filename => same file
         when(uri.getPath()).thenReturn(parentPath + filename);
         task = new DownloadTask
-                .Builder("url", uri)
+                .Builder("url", uri,null)
                 .build();
-        buildTask = task.toBuilder("anotherUrl", uri).build();
+        buildTask = task.toBuilder("anotherUrl", uri, null).build();
         assertFile(buildTask.getFile()).isEqualTo(task.getFile());
     }
 
@@ -270,7 +270,7 @@ public class DownloadTaskTest {
         when(uri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
 
         // basic profile
-        DownloadTask task = new DownloadTask.Builder(url, uri)
+        DownloadTask task = new DownloadTask.Builder(url, uri,null)
                 .setReadBufferSize(1)
                 .setFlushBufferSize(2)
                 .setSyncBufferSize(3)
@@ -306,8 +306,8 @@ public class DownloadTaskTest {
         assertThat(task.getLastCallbackProcessTs()).isEqualTo(1L);
 
         // setTags
-        DownloadTask oldTask = new DownloadTask.Builder(url, uri).build();
-        DownloadTask newTask = new DownloadTask.Builder(url, uri).build();
+        DownloadTask oldTask = new DownloadTask.Builder(url, uri,null).build();
+        DownloadTask newTask = new DownloadTask.Builder(url, uri,null).build();
         oldTask.setTag("tag");
         oldTask.addTag(0, "tag0");
         newTask.setTags(oldTask);
@@ -323,7 +323,7 @@ public class DownloadTaskTest {
         final Uri uri = mock(Uri.class);
         when(uri.getScheme()).thenReturn(ContentResolver.SCHEME_FILE);
         when(uri.getPath()).thenReturn("~/path");
-        DownloadTask task = new DownloadTask.Builder(url, uri).build();
+        DownloadTask task = new DownloadTask.Builder(url, uri,null).build();
 
         // enqueue
         final DownloadListener listener = mock(DownloadListener.class);
@@ -345,23 +345,23 @@ public class DownloadTaskTest {
     public void taskBuilder_constructWithFile() {
         final String url = "https://jacksgong.com";
         final File noExistFile = new File(parentPath, "no-exist");
-        DownloadTask task = new DownloadTask.Builder(url, noExistFile).build();
+        DownloadTask task = new DownloadTask.Builder(url, noExistFile,null).build();
         assertThat(task.getFilename()).isEqualTo(noExistFile.getName());
         assertThat(task.getFile().getAbsolutePath()).isEqualTo(noExistFile.getAbsolutePath());
 
         final File existFile = new File(parentPath, filename);
-        task = new DownloadTask.Builder(url, existFile).build();
+        task = new DownloadTask.Builder(url, existFile,null).build();
         assertThat(task.getFilename()).isEqualTo(existFile.getName());
         assertThat(task.getFile().getAbsolutePath()).isEqualTo(existFile.getAbsolutePath());
 
         final File existParentFile = new File(parentPath);
-        task = new DownloadTask.Builder(url, existParentFile).build();
+        task = new DownloadTask.Builder(url, existParentFile,null).build();
         assertThat(task.getFilename()).isNull();
         assertThat(task.getFile()).isNull();
         assertFile(task.getParentFile()).isEqualTo(existParentFile);
 
         final File onlyFile = new File("/path");
-        task = new DownloadTask.Builder(url, onlyFile).build();
+        task = new DownloadTask.Builder(url, onlyFile,null).build();
         assertThat(task.getFilename()).isEqualTo("path");
         assertFile(task.getFile()).isEqualTo(onlyFile);
         assertFile(task.getParentFile()).isEqualTo(new File("/"));
@@ -393,7 +393,7 @@ public class DownloadTaskTest {
         when(store.findOrCreateId(any(DownloadTask.class))).thenReturn(1);
 
         final DownloadTask task = new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath))
+                .Builder("https://jacksgong.com", new File(parentPath),null)
                 .build();
 
         assertThat(task.getInfo()).isEqualTo(info);
@@ -402,20 +402,20 @@ public class DownloadTaskTest {
     @Test
     public void mockTaskForCompare() {
         DownloadTask task = new DownloadTask
-                .Builder("https://jacksgong.com", parentPath, filename)
+                .Builder("https://jacksgong.com", parentPath, filename,null)
                 .build();
 
         IdentifiedTask identifiedTask = task.mock(0);
         assertThat(identifiedTask.compareIgnoreId(task)).isTrue();
 
         task = new DownloadTask
-                .Builder("https://www.jacksgong.com", new File(parentPath))
+                .Builder("https://www.jacksgong.com", new File(parentPath),null)
                 .build();
         identifiedTask = task.mock(0);
         assertThat(identifiedTask.compareIgnoreId(task)).isTrue();
 
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "non-exist-parent", "non-exist")
+                .Builder("https://jacksgong.com", "non-exist-parent", "non-exist",null)
                 .build();
         identifiedTask = task.mock(0);
         assertThat(identifiedTask.compareIgnoreId(task)).isTrue();
@@ -425,7 +425,7 @@ public class DownloadTaskTest {
     public void constructor_path() {
         // exist[filename and parent path]
         DownloadTask task = new DownloadTask
-                .Builder("https://jacksgong.com", parentPath, filename)
+                .Builder("https://jacksgong.com", parentPath, filename,null)
                 .build();
         assertThat(task.getFilename()).isEqualTo(filename);
         assertThat(task.getFile().getAbsolutePath())
@@ -433,7 +433,7 @@ public class DownloadTaskTest {
 
         // exist[filename and parent path] but force filename from response
         task = new DownloadTask
-                .Builder("https://jacksgong.com", parentPath, filename)
+                .Builder("https://jacksgong.com", parentPath, filename,null)
                 .setFilenameFromResponse(true)
                 .build();
         assertThat(task.getFilename()).isNull();
@@ -442,7 +442,7 @@ public class DownloadTaskTest {
 
         // exist[parent path] and provide[filename through setFilename]
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath))
+                .Builder("https://jacksgong.com", new File(parentPath),null)
                 .setFilename(filename)
                 .build();
         assertThat(task.getFilename()).isEqualTo(filename);
@@ -451,7 +451,7 @@ public class DownloadTaskTest {
 
         // exist[parent path] but not provide[filename]
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath))
+                .Builder("https://jacksgong.com", new File(parentPath),null)
                 .build();
         assertThat(task.getFilename()).isNull();
         assertThat(task.getFile()).isNull();
@@ -459,7 +459,7 @@ public class DownloadTaskTest {
 
         // unknown filename or parent path
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File("/not-exist"))
+                .Builder("https://jacksgong.com", new File("/not-exist"),null)
                 .build();
         assertThat(task.getFilename()).isEqualTo("not-exist");
         assertFile(task.getFile()).isEqualTo(new File("/not-exist"));
@@ -467,7 +467,7 @@ public class DownloadTaskTest {
 
         // unknown filename or parent path but set filename from response
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File("not-exist"))
+                .Builder("https://jacksgong.com", new File("not-exist"),null)
                 .setFilenameFromResponse(true)
                 .build();
         assertThat(task.getFilename()).isNull();
@@ -476,14 +476,14 @@ public class DownloadTaskTest {
 
         // there is filename and parent path but all not exist
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File("not-exist/filename"))
+                .Builder("https://jacksgong.com", new File("not-exist/filename"),null)
                 .build();
         assertThat(task.getFilename()).isEqualTo("filename");
         assertFile(task.getFile()).isEqualTo(new File("not-exist/filename"));
         assertFile(task.getParentFile()).isEqualTo(new File("not-exist"));
 
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", "filename")
+                .Builder("https://jacksgong.com", "not-exist", "filename",null)
                 .build();
         assertThat(task.getFilename()).isEqualTo("filename");
         assertFile(task.getFile()).isEqualTo(new File("not-exist", "filename"));
@@ -491,7 +491,7 @@ public class DownloadTaskTest {
 
         // there is filename and parent path but all not exist and set filename from response
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", "filename")
+                .Builder("https://jacksgong.com", "not-exist", "filename",null)
                 .setFilenameFromResponse(true)
                 .build();
         assertThat(task.getFilename()).isNull();
@@ -500,7 +500,7 @@ public class DownloadTaskTest {
 
         // there is filename and parent path but all not exist and set filename not from response
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", "filename")
+                .Builder("https://jacksgong.com", "not-exist", "filename",null)
                 .setFilenameFromResponse(false)
                 .build();
         assertThat(task.getFilename()).isEqualTo("filename");
@@ -509,7 +509,7 @@ public class DownloadTaskTest {
 
 
         task = new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath, "unknown-filename"))
+                .Builder("https://jacksgong.com", new File(parentPath, "unknown-filename"),null)
                 .setFilenameFromResponse(false)
                 .build();
         assertThat(task.getFilename()).isEqualTo("unknown-filename");
@@ -518,7 +518,7 @@ public class DownloadTaskTest {
 
         // provide null filename.
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", null)
+                .Builder("https://jacksgong.com", "not-exist", null,null)
                 .build();
         assertThat(task.getFilename()).isNull();
         assertThat(task.getFile()).isNull();
@@ -529,7 +529,7 @@ public class DownloadTaskTest {
         thrown.expectMessage("If you want filename from response please make sure you "
                 + "provide path is directory " + new File(parentPath, filename).getAbsolutePath());
         new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath, filename))
+                .Builder("https://jacksgong.com", new File(parentPath, filename),null)
                 .setFilenameFromResponse(true)
                 .build();
 
@@ -539,14 +539,14 @@ public class DownloadTaskTest {
                 + " you have already provided valid filename or not directory path "
                 + new File(parentPath).getAbsolutePath());
         new DownloadTask
-                .Builder("https://jacksgong.com", new File(parentPath))
+                .Builder("https://jacksgong.com", new File(parentPath),null)
                 .setFilenameFromResponse(false)
                 .build();
 
         // connection count.
         assertThat(task.getSetConnectionCount()).isNull();
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", null)
+                .Builder("https://jacksgong.com", "not-exist", null,null)
                 .setConnectionCount(2)
                 .build();
         assertThat(task.getSetConnectionCount()).isEqualTo(2);
@@ -554,7 +554,7 @@ public class DownloadTaskTest {
         // pre-allocate-length
         assertThat(task.getSetPreAllocateLength()).isNull();
         task = new DownloadTask
-                .Builder("https://jacksgong.com", "not-exist", null)
+                .Builder("https://jacksgong.com", "not-exist", null,null)
                 .setPreAllocateLength(true)
                 .build();
         assertThat(task.getSetPreAllocateLength()).isTrue();
@@ -563,7 +563,7 @@ public class DownloadTaskTest {
     @Test
     public void taskToString() {
         DownloadTask task = new DownloadTask.Builder("https://jacksgong.com",
-                new File(parentPath, filename)).build();
+                new File(parentPath, filename),null).build();
         assertThat(task.toString())
                 .endsWith("@" + task.getId() + "@https://jacksgong.com@"
                         + new File(parentPath, filename).getAbsolutePath());
@@ -572,7 +572,7 @@ public class DownloadTaskTest {
     @Test
     public void replaceListener() {
         DownloadTask task = new DownloadTask.Builder("https://jacksgong.com",
-                new File(parentPath, filename)).build();
+                new File(parentPath, filename),null).build();
 
         final DownloadListener listener = mock(DownloadListener.class);
         task.enqueue(listener);
@@ -585,7 +585,7 @@ public class DownloadTaskTest {
 
     @Test
     public void mockTaskForCompare_justId() {
-        final IdentifiedTask task = DownloadTask.mockTaskForCompare(1);
+        final IdentifiedTask task = DownloadTask.mockTaskForCompare(1, null);
         assertThat(task.getId()).isEqualTo(1);
         assertThat(task.getUrl()).isEqualTo(IdentifiedTask.EMPTY_URL);
         assertThat(task.getFilename()).isNull();
@@ -596,11 +596,12 @@ public class DownloadTaskTest {
     public void redirectLocation() {
         final String redirectLocation = "http://redirect";
         DownloadTask task = new DownloadTask.Builder("https://jacksgong.com",
-                new File(parentPath, filename)).build();
+                new File(parentPath, filename),null).build();
         task.setRedirectLocation(redirectLocation);
         assertThat(task.getRedirectLocation()).isEqualTo(redirectLocation);
     }
 
-    @Rule public ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
 }

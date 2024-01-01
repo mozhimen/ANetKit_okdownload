@@ -16,6 +16,7 @@
 
 package com.liulishuo.okdownload.core.breakpoint;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 
 import java.io.File;
@@ -37,6 +38,7 @@ public class BreakpointInfoRow {
     private final boolean taskOnlyProvidedParentPath;
     private final boolean chunked;
 
+    @SuppressLint("Range")
     public BreakpointInfoRow(Cursor cursor) {
         this.id = cursor.getInt(cursor.getColumnIndex(ID));
         this.url = cursor.getString(cursor.getColumnIndex(URL));
@@ -76,9 +78,9 @@ public class BreakpointInfoRow {
         return chunked;
     }
 
-    public BreakpointInfo toInfo() {
+    public BreakpointInfo toInfo(IBreakpointCompare breakpointCompare) {
         final BreakpointInfo info = new BreakpointInfo(id, url, new File(parentPath), filename,
-                taskOnlyProvidedParentPath);
+                taskOnlyProvidedParentPath, breakpointCompare);
         info.setEtag(etag);
         info.setChunked(chunked);
         return info;

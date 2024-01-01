@@ -17,8 +17,10 @@
 package com.liulishuo.okdownload.core.breakpoint;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import androidx.annotation.NonNull;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.core.Util;
@@ -37,9 +39,9 @@ public class BreakpointStoreOnSQLite implements DownloadStore {
         this.onCache = onCache;
     }
 
-    public BreakpointStoreOnSQLite(Context context) {
+    public BreakpointStoreOnSQLite(Context context,IBreakpointCompare breakpointCompare) {
         this.helper = new BreakpointSQLiteHelper(context.getApplicationContext());
-        this.onCache = new BreakpointStoreOnCache(helper.loadToCache(),
+        this.onCache = new BreakpointStoreOnCache(helper.loadToCache(breakpointCompare),
                 helper.loadDirtyFileList(),
                 helper.loadResponseFilenameToMap());
     }

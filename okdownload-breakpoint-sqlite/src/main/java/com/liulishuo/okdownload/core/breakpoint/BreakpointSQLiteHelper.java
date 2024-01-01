@@ -16,13 +16,16 @@
 
 package com.liulishuo.okdownload.core.breakpoint;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+
 import android.util.SparseArray;
 
 import com.liulishuo.okdownload.core.exception.SQLiteException;
@@ -46,6 +49,7 @@ import static com.liulishuo.okdownload.core.breakpoint.BreakpointSQLiteKey.START
 import static com.liulishuo.okdownload.core.breakpoint.BreakpointSQLiteKey.TASK_ONLY_PARENT_PATH;
 import static com.liulishuo.okdownload.core.breakpoint.BreakpointSQLiteKey.URL;
 
+@SuppressLint("Range")
 public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String NAME = "okdownload-breakpoint.db";
@@ -125,7 +129,7 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         return dirtyFileList;
     }
 
-    public SparseArray<BreakpointInfo> loadToCache() {
+    public SparseArray<BreakpointInfo> loadToCache(IBreakpointCompare breakpointCompare) {
         Cursor breakpointCursor = null;
         Cursor blockCursor = null;
         final SQLiteDatabase db = getWritableDatabase();
@@ -150,13 +154,17 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         final SparseArray<BreakpointInfo> breakpointInfoMap = new SparseArray<>();
 
         for (BreakpointInfoRow infoRow : breakpointInfoRows) {
-            final BreakpointInfo info = infoRow.toInfo();
+            final BreakpointInfo info = infoRow.toInfo(breakpointCompare);
             final Iterator<BlockInfoRow> blockIt = blockInfoRows.iterator();
             while (blockIt.hasNext()) {
                 final BlockInfoRow blockInfoRow = blockIt.next();
                 if (blockInfoRow.getBreakpointId() == info.id) {
-                    info.addBlock(blockInfoRow.toInfo());
-                    blockIt.remove();
+                    try {
+                        info.addBlock(blockInfoRow.toInfo());
+                        blockIt.remove();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             breakpointInfoMap.put(info.id, info);
@@ -184,6 +192,7 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         return urlFilenameMap;
     }
 
+    @SuppressLint("Range")
     public void updateFilename(@NonNull String url, @NonNull String filename) {
         final SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues(2);

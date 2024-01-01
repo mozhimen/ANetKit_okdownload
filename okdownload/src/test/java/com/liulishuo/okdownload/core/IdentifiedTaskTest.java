@@ -16,10 +16,11 @@
 
 package com.liulishuo.okdownload.core;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.DownloadTask;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +61,12 @@ public class IdentifiedTaskTest {
             @Nullable @Override public String getFilename() {
                 return filename;
             }
+
+            @Nullable
+            @Override
+            public IBreakpointCompare getBreakCompare() {
+                return null;
+            }
         });
 
         another = spy(new IdentifiedTask() {
@@ -81,6 +88,12 @@ public class IdentifiedTaskTest {
 
             @Nullable @Override public String getFilename() {
                 return filename;
+            }
+
+            @Nullable
+            @Override
+            public IBreakpointCompare getBreakCompare() {
+                return null;
             }
         });
     }
@@ -131,8 +144,8 @@ public class IdentifiedTaskTest {
 
     @Test
     public void compareIgnoreId_falseEmpty() {
-        final IdentifiedTask task = DownloadTask.mockTaskForCompare(1);
-        final IdentifiedTask anotherTask = DownloadTask.mockTaskForCompare(2);
+        final IdentifiedTask task = DownloadTask.mockTaskForCompare(1,null);
+        final IdentifiedTask anotherTask = DownloadTask.mockTaskForCompare(2,null);
 
         assertThat(task.compareIgnoreId(task)).isFalse();
         assertThat(task.compareIgnoreId(anotherTask)).isFalse();

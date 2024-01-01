@@ -17,15 +17,18 @@
 package com.liulishuo.okdownload;
 
 import android.net.Uri;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.util.SparseArray;
 
 import com.liulishuo.okdownload.core.IdentifiedTask;
 import com.liulishuo.okdownload.core.Util;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointInfo;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointStore;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.download.DownloadStrategy;
 
 import java.io.File;
@@ -45,11 +48,13 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class DownloadTask extends IdentifiedTask implements Comparable<DownloadTask> {
     private final int id;
-    @NonNull private final String url;
+    @NonNull
+    private final String url;
     private final Uri uri;
     private final Map<String, List<String>> headerMapFields;
 
-    @Nullable private BreakpointInfo info;
+    @Nullable
+    private BreakpointInfo info;
     /**
      * This value more larger the priority more high.
      */
@@ -66,8 +71,10 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
     private final int syncBufferSize;
     private final int syncBufferIntervalMills;
 
-    @Nullable private final Integer connectionCount;
-    @Nullable private final Boolean isPreAllocateLength;
+    @Nullable
+    private final Integer connectionCount;
+    @Nullable
+    private final Boolean isPreAllocateLength;
 
     /**
      * if this task has already completed with
@@ -86,14 +93,21 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
     private final AtomicLong lastCallbackProcessTimestamp;
     private final boolean filenameFromResponse;
 
-    @NonNull private final DownloadStrategy.FilenameHolder filenameHolder;
-    @NonNull private final File providedPathFile;
-    @NonNull private final File directoryFile;
+    @NonNull
+    private final DownloadStrategy.FilenameHolder filenameHolder;
+    @NonNull
+    private final File providedPathFile;
+    @NonNull
+    private final File directoryFile;
 
-    @Nullable private File targetFile;
-    @Nullable private String redirectLocation;
+    @Nullable
+    private File targetFile;
+    @Nullable
+    private String redirectLocation;
+    @Nullable
+    private final IBreakpointCompare breakpointCompare;
 
-    public DownloadTask(String url, Uri uri, int priority, int readBufferSize, int flushBufferSize,
+    public DownloadTask(@NonNull String url, @Nullable IBreakpointCompare breakpointCompare, Uri uri, int priority, int readBufferSize, int flushBufferSize,
                         int syncBufferSize, int syncBufferIntervalMills,
                         boolean autoCallbackToUIThread, int minIntervalMillisCallbackProcess,
                         Map<String, List<String>> headerMapFields, @Nullable String filename,
@@ -101,6 +115,7 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
                         Boolean filenameFromResponse, @Nullable Integer connectionCount,
                         @Nullable Boolean isPreAllocateLength) {
         this.url = url;
+        this.breakpointCompare = breakpointCompare;
         this.uri = uri;
         this.priority = priority;
         this.readBufferSize = readBufferSize;
@@ -222,7 +237,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
     /**
      * This id can be used on {@link BreakpointStore}
      */
-    @Override public int getId() {
+    @Override
+    public int getId() {
         return this.id;
     }
 
@@ -232,8 +248,15 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      * @return the filename of the file to store download data. {@code null} if you not provided it
      * and okdownload isn't get response yet.
      */
-    @Nullable public String getFilename() {
+    @Nullable
+    public String getFilename() {
         return filenameHolder.get();
+    }
+
+    @Nullable
+    @Override
+    public IBreakpointCompare getBreakCompare() {
+        return breakpointCompare;
     }
 
     /**
@@ -273,7 +296,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      *
      * @return the url for this task.
      */
-    @NonNull public String getUrl() {
+    @NonNull
+    public String getUrl() {
         return url;
     }
 
@@ -286,7 +310,9 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
         return redirectLocation;
     }
 
-    @NonNull @Override protected File getProvidedPathFile() {
+    @NonNull
+    @Override
+    protected File getProvidedPathFile() {
         return this.providedPathFile;
     }
 
@@ -298,7 +324,9 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      *
      * @return the parent path of the file store downloaded data.
      */
-    @Override @NonNull public File getParentFile() {
+    @Override
+    @NonNull
+    public File getParentFile() {
         return directoryFile;
     }
 
@@ -310,7 +338,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      * @return the path of file store downloaded data. {@code null} is there isn't filename found
      * yet for the file of this task.
      */
-    @Nullable public File getFile() {
+    @Nullable
+    public File getFile() {
         final String filename = filenameHolder.get();
         if (filename == null) return null;
         if (targetFile == null) targetFile = new File(directoryFile, filename);
@@ -377,7 +406,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      *
      * @return the connection count you set.
      */
-    @Nullable public Integer getSetConnectionCount() {
+    @Nullable
+    public Integer getSetConnectionCount() {
         return connectionCount;
     }
 
@@ -387,7 +417,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      *
      * @return whether need to pre-allocate length you set.
      */
-    @Nullable public Boolean getSetPreAllocateLength() {
+    @Nullable
+    public Boolean getSetPreAllocateLength() {
         return isPreAllocateLength;
     }
 
@@ -426,7 +457,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      * @return {@code null} Only if there isn't any info for this task yet, otherwise you can get
      * the info for the task.
      */
-    @Nullable public BreakpointInfo getInfo() {
+    @Nullable
+    public BreakpointInfo getInfo() {
         if (info == null) info = OkDownload.with().breakpointStore().get(id);
         return info;
     }
@@ -576,8 +608,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
         return priority;
     }
 
-    public Builder toBuilder(String anotherUrl, Uri anotherUri) {
-        final Builder builder = new Builder(anotherUrl, anotherUri)
+    public Builder toBuilder(String anotherUrl, Uri anotherUri, IBreakpointCompare anotherBreakpointCompare) {
+        final Builder builder = new Builder(anotherUrl, anotherUri, anotherBreakpointCompare)
                 .setPriority(priority)
                 .setReadBufferSize(readBufferSize)
                 .setFlushBufferSize(flushBufferSize)
@@ -595,7 +627,7 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
                 // only if filename is provided and not provided through uri
                 && filenameHolder.get() != null
                 && !new File(uri.getPath()).getName().equals(filenameHolder.get())
-                ) {
+        ) {
             builder.setFilename(filenameHolder.get());
         }
 
@@ -603,7 +635,7 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
     }
 
     public Builder toBuilder() {
-        return toBuilder(this.url, this.uri);
+        return toBuilder(this.url, this.uri, this.breakpointCompare);
     }
 
     /**
@@ -616,7 +648,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
         this.keyTagMap = oldTask.keyTagMap;
     }
 
-    @Override public int compareTo(@NonNull DownloadTask o) {
+    @Override
+    public int compareTo(@NonNull DownloadTask o) {
         return o.getPriority() - getPriority();
     }
 
@@ -624,8 +657,12 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      * The builder of download task.
      */
     public static class Builder {
-        @NonNull final String url;
-        @NonNull final Uri uri;
+        @NonNull
+        final String url;
+        @Nullable
+        final IBreakpointCompare breakpointCompare;
+        @NonNull
+        final Uri uri;
         private volatile Map<String, List<String>> headerMapFields;
 
         /**
@@ -635,8 +672,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
          * @param parentPath the parent path of the file for store download data.
          * @param filename   the filename of the file for store download data.
          */
-        public Builder(@NonNull String url, @NonNull String parentPath, @Nullable String filename) {
-            this(url, Uri.fromFile(new File(parentPath)));
+        public Builder(@NonNull String url, @NonNull String parentPath, @Nullable String filename, @Nullable IBreakpointCompare breakpointCompare) {
+            this(url, Uri.fromFile(new File(parentPath)), breakpointCompare);
             if (Util.isEmpty(filename)) {
                 this.isFilenameFromResponse = true;
             } else {
@@ -650,8 +687,9 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
          * @param url  the url for the task.
          * @param file the file is used for store download data of the task.
          */
-        public Builder(@NonNull String url, @NonNull File file) {
+        public Builder(@NonNull String url, @NonNull File file, @Nullable IBreakpointCompare breakpointCompare) {
             this.url = url;
+            this.breakpointCompare = breakpointCompare;
             this.uri = Uri.fromFile(file);
         }
 
@@ -661,8 +699,9 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
          * @param url the url for the task.
          * @param uri the uri indicate the file path of the task.
          */
-        public Builder(@NonNull String url, @NonNull Uri uri) {
+        public Builder(@NonNull String url, @NonNull Uri uri, @Nullable IBreakpointCompare breakpointCompare) {
             this.url = url;
+            this.breakpointCompare = breakpointCompare;
             this.uri = uri;
             if (Util.isUriContentScheme(uri)) {
                 this.filename = Util.getFilenameFromContentUri(uri);
@@ -913,7 +952,7 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
          * @return a new task is built from this builder.
          */
         public DownloadTask build() {
-            return new DownloadTask(url, uri, priority, readBufferSize, flushBufferSize,
+            return new DownloadTask(url, breakpointCompare, uri, priority, readBufferSize, flushBufferSize,
                     syncBufferSize, syncBufferIntervalMillis,
                     autoCallbackToUIThread, minIntervalMillisCallbackProcess,
                     headerMapFields, filename, passIfAlreadyCompleted, isWifiRequired,
@@ -921,7 +960,8 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
         }
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         if (super.equals(obj)) return true;
 
         if (obj instanceof DownloadTask) {
@@ -933,11 +973,13 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
         return false;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return (url + providedPathFile.toString() + filenameHolder.get()).hashCode();
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return super.toString() + "@" + id + "@" + url + "@" + directoryFile.toString()
                 + "/" + filenameHolder.get();
     }
@@ -947,12 +989,13 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
      *
      * @param id the id is set for this mock task.
      */
-    public static MockTaskForCompare mockTaskForCompare(int id) {
-        return new MockTaskForCompare(id);
+    public static MockTaskForCompare mockTaskForCompare(int id, @Nullable IBreakpointCompare breakpointCompare) {
+        return new MockTaskForCompare(id, breakpointCompare);
     }
 
-    @NonNull public MockTaskForCompare mock(int id) {
-        return new MockTaskForCompare(id, this);
+    @NonNull
+    public MockTaskForCompare mock(int id) {
+        return new MockTaskForCompare(id, this, getBreakCompare());
     }
 
     public static class TaskHideWrapper {
@@ -973,45 +1016,68 @@ public class DownloadTask extends IdentifiedTask implements Comparable<DownloadT
 
     public static class MockTaskForCompare extends IdentifiedTask {
         final int id;
-        @NonNull final String url;
-        @NonNull final File providedPathFile;
-        @Nullable final String filename;
-        @NonNull final File parentFile;
+        @NonNull
+        final String url;
+        @NonNull
+        final File providedPathFile;
+        @Nullable
+        final String filename;
+        @NonNull
+        final File parentFile;
+        @Nullable
+        final IBreakpointCompare breakpointCompare;
 
-        public MockTaskForCompare(int id) {
+        public MockTaskForCompare(int id, @Nullable IBreakpointCompare breakpointCompare) {
             this.id = id;
             this.url = EMPTY_URL;
             this.providedPathFile = EMPTY_FILE;
             this.filename = null;
             this.parentFile = EMPTY_FILE;
+            this.breakpointCompare = breakpointCompare;
         }
 
-        public MockTaskForCompare(int id, @NonNull DownloadTask task) {
+        public MockTaskForCompare(int id, @NonNull DownloadTask task, @Nullable IBreakpointCompare breakpointCompare) {
             this.id = id;
             this.url = task.url;
             this.parentFile = task.getParentFile();
             this.providedPathFile = task.providedPathFile;
             this.filename = task.getFilename();
+            this.breakpointCompare = breakpointCompare;
         }
 
-        @Override public int getId() {
+        @Override
+        public int getId() {
             return id;
         }
 
-        @NonNull @Override public String getUrl() {
+        @NonNull
+        @Override
+        public String getUrl() {
             return url;
         }
 
-        @NonNull @Override protected File getProvidedPathFile() {
+        @NonNull
+        @Override
+        protected File getProvidedPathFile() {
             return providedPathFile;
         }
 
-        @NonNull @Override public File getParentFile() {
+        @NonNull
+        @Override
+        public File getParentFile() {
             return parentFile;
         }
 
-        @Nullable @Override public String getFilename() {
+        @Nullable
+        @Override
+        public String getFilename() {
             return filename;
+        }
+
+        @Nullable
+        @Override
+        public IBreakpointCompare getBreakCompare() {
+            return breakpointCompare;
         }
     }
 }

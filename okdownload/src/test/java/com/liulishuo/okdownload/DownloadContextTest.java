@@ -281,7 +281,7 @@ public class DownloadContextTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void builder_bind_noSetUri() {
-        builder.bind("url");
+        builder.bind("url",null);
     }
 
     @Test
@@ -294,7 +294,7 @@ public class DownloadContextTest {
         when(uri.getPath()).thenReturn("");
         queueSet.setParentPathUri(uri);
         assertThat(queueSet.getDirUri()).isEqualTo(uri);
-        builder.bind(url);
+        builder.bind(url,null);
         final DownloadTask addedTask = builder.boundTaskList.get(0);
         assertThat(addedTask.getUrl()).isEqualTo(url);
         assertThat(addedTask.getUri()).isEqualTo(uri);

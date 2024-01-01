@@ -18,8 +18,8 @@ package com.liulishuo.okdownload.core.dispatcher;
 
 
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.OkDownload;
@@ -27,6 +27,7 @@ import com.liulishuo.okdownload.StatusUtil;
 import com.liulishuo.okdownload.core.IdentifiedTask;
 import com.liulishuo.okdownload.core.Util;
 import com.liulishuo.okdownload.core.breakpoint.DownloadStore;
+import com.liulishuo.okdownload.core.breakpoint.IBreakpointCompare;
 import com.liulishuo.okdownload.core.cause.EndCause;
 import com.liulishuo.okdownload.core.download.DownloadCall;
 
@@ -215,9 +216,9 @@ public class DownloadDispatcher {
         return result;
     }
 
-    public boolean cancel(int id) {
+    public boolean cancel(int id, IBreakpointCompare breakpointCompare) {
         skipProceedCallCount.incrementAndGet();
-        final boolean result = cancelLocked(DownloadTask.mockTaskForCompare(id));
+        final boolean result = cancelLocked(DownloadTask.mockTaskForCompare(id,breakpointCompare));
         skipProceedCallCount.decrementAndGet();
         processCalls();
         return result;
