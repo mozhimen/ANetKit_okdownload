@@ -190,14 +190,14 @@ public class FileDownloadUtils {
 
     @Deprecated
     public static int generateId(final String url, final String path) {
-        return new DownloadTask.Builder(url, new File(path)).build().getId();
+        return new DownloadTask.Builder(url, new File(path),null).build().getId();
     }
 
     @Deprecated
     public static int generateId(final String url, final String path,
                                  final boolean pathAsDirectory) {
         if (pathAsDirectory) {
-            return new DownloadTask.Builder(url, path, null).build().getId();
+            return new DownloadTask.Builder(url, path, null,null).build().getId();
         }
 
         return generateId(url, path);

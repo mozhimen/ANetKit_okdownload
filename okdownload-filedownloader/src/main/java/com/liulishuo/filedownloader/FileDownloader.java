@@ -292,7 +292,7 @@ public class FileDownloader {
     }
 
     public int pause(final int id) {
-        OkDownload.with().downloadDispatcher().cancel(id);
+        OkDownload.with().downloadDispatcher().cancel(id,null);
         return 0;
     }
 
@@ -410,7 +410,7 @@ public class FileDownloader {
     public byte getStatus(final String url, final String path) {
         final File file = new File(path);
         final StatusUtil.Status okDownloadStatus =
-                StatusUtil.getStatus(url, file.getParent(), file.getName());
+                StatusUtil.getStatus(url, file.getParent(), file.getName(),null);
         return FileDownloadUtils.convertDownloadStatus(okDownloadStatus);
     }
 
@@ -453,7 +453,7 @@ public class FileDownloader {
      */
     public int replaceListener(String url, String path, FileDownloadListener listener) {
         final File file = new File(path);
-        final DownloadTask downloadTask = new DownloadTask.Builder(url, file).build();
+        final DownloadTask downloadTask = new DownloadTask.Builder(url, file,null).build();
         return replaceListener(downloadTask.getId(), listener);
     }
 

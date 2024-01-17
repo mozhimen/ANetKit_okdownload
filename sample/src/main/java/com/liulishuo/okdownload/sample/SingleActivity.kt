@@ -80,7 +80,7 @@ class SingleActivity : BaseSampleActivity() {
         val filename = "single-test"
         val url = "https://cdn.llscdn.com/yy/files/xs8qmxn8-lls-LLS-5.8-800-20171207-111607.apk"
         val parentFile = DemoUtil.getParentFile(this)
-        task = DownloadTask.Builder(url, parentFile)
+        task = DownloadTask.Builder(url, parentFile, null)
             .setFilename(filename)
             // the minimal interval millisecond for callback progress
             .setMinIntervalMillisCallbackProcess(16)

@@ -357,7 +357,7 @@ public class CallbackDispatcherTest {
     @Test
     public void fetchProgress_setMinInterval() {
         final DownloadTask task = spy(new DownloadTask
-                .Builder("https://jacksgong.com", "parentPath", "filename")
+                .Builder("https://jacksgong.com", "parentPath", "filename",null)
                 .setMinIntervalMillisCallbackProcess(1)
                 .build());
         final DownloadListener listener = mock(DownloadListener.class);

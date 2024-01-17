@@ -300,7 +300,7 @@ public class DownloadStrategyTest {
     @Test
     public void validInfoOnCompleted_storeValid() {
         final DownloadStore store = mock(DownloadStore.class);
-        final DownloadTask task = new DownloadTask.Builder("https://jacksgong.com", "path", "name")
+        final DownloadTask task = new DownloadTask.Builder("https://jacksgong.com", "path", "name",null)
                 .build();
         when(store.getAfterCompleted(task.getId())).thenReturn(info);
 
@@ -323,7 +323,7 @@ public class DownloadStrategyTest {
         when(resolver.query(contentUri, null, null, null, null)).thenReturn(cursor);
         when(cursor.getLong(anyInt())).thenReturn(1L);
 
-        final DownloadTask task = new DownloadTask.Builder("https://jacksgong.com", contentUri)
+        final DownloadTask task = new DownloadTask.Builder("https://jacksgong.com", contentUri, null)
                 .build();
 
         strategy.validInfoOnCompleted(task, mock(DownloadStore.class));
@@ -339,7 +339,7 @@ public class DownloadStrategyTest {
         mockOkDownload();
 
         final DownloadTask task = spy(
-                new DownloadTask.Builder("https://jacksgong.com", "path", "name")
+                new DownloadTask.Builder("https://jacksgong.com", "path", "name",null)
                         .build());
 
         // null file

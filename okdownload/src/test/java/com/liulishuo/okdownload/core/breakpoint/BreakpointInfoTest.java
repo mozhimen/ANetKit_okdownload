@@ -32,18 +32,18 @@ public class BreakpointInfoTest {
 
     @Test
     public void getPath() {
-        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null);
+        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null, null);
         assertThat(info.getFile()).isNull();
 
         final String parentPath = "/sdcard";
         final String filename = "abc";
-        info = new BreakpointInfo(0, "", new File(parentPath), filename);
+        info = new BreakpointInfo(0, "", new File(parentPath), filename, null);
         assertThat(info.getFile()).isEqualTo(new File(parentPath, filename));
     }
 
     @Test
     public void copyNotClone() {
-        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null);
+        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null, null);
         info.addBlock(new BlockInfo(0, 0));
         info.setChunked(true);
 
@@ -55,7 +55,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void getTotalOffset() {
-        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null);
+        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null, null);
         info.addBlock(new BlockInfo(0, 10, 10));
         info.addBlock(new BlockInfo(10, 18, 18));
         info.addBlock(new BlockInfo(28, 66, 66));
@@ -64,7 +64,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void getTotalLength_chunked() {
-        BreakpointInfo info = spy(new BreakpointInfo(0, "", new File(""), null));
+        BreakpointInfo info = spy(new BreakpointInfo(0, "", new File(""), null, null));
         when(info.isChunked()).thenReturn(true);
         doReturn(1L).when(info).getTotalOffset();
         assertThat(info.getTotalLength()).isEqualTo(1L);
@@ -72,7 +72,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void getTotalLength() {
-        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null);
+        BreakpointInfo info = new BreakpointInfo(0, "", new File(""), null, null);
         info.addBlock(new BlockInfo(0, 10));
         info.addBlock(new BlockInfo(10, 18, 2));
         info.addBlock(new BlockInfo(28, 66, 20));
@@ -82,7 +82,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void isSameFrom() {
-        BreakpointInfo info = new BreakpointInfo(1, "url", new File("p-path"), "filename");
+        BreakpointInfo info = new BreakpointInfo(1, "url", new File("p-path"), "filename", null);
         DownloadTask task = mock(DownloadTask.class);
 
         // no filename -> false
@@ -98,7 +98,7 @@ public class BreakpointInfoTest {
         when(task.isFilenameFromResponse()).thenReturn(true);
         assertThat(info.isSameFrom(task)).isTrue();
 
-        info = new BreakpointInfo(1, "url", new File("p-path"), null);
+        info = new BreakpointInfo(1, "url", new File("p-path"), null, null);
         assertThat(info.isSameFrom(task)).isFalse();
 
         // not directory with filename -> false (don't know whether same yet)
@@ -117,7 +117,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void copyWithReplaceId() {
-        BreakpointInfo info = new BreakpointInfo(1, "url", new File("/p-path/"), "filename");
+        BreakpointInfo info = new BreakpointInfo(1, "url", new File("/p-path/"), "filename", null);
         final BlockInfo oldBlockInfo = new BlockInfo(0, 1);
         info.addBlock(oldBlockInfo);
         info.setChunked(true);
@@ -139,7 +139,7 @@ public class BreakpointInfoTest {
 
     @Test
     public void copyWithReplaceIdAndUrl() {
-        BreakpointInfo info = new BreakpointInfo(1, "url", new File("/p-path/"), "filename");
+        BreakpointInfo info = new BreakpointInfo(1, "url", new File("/p-path/"), "filename", null);
         final BlockInfo oldBlockInfo = new BlockInfo(0, 1);
         info.addBlock(oldBlockInfo);
         info.setChunked(true);

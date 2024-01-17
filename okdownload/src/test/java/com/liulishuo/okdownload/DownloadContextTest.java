@@ -117,8 +117,8 @@ public class DownloadContextTest {
         mockOkDownload();
 
         final DownloadTask[] tasks = new DownloadTask[2];
-        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1").build());
-        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1").build());
+        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1",null).build());
+        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1",null).build());
         DownloadTask task = tasks[0];
         when(task.isAutoCallbackToUIThread()).thenReturn(true);
         task = tasks[1];
@@ -158,8 +158,8 @@ public class DownloadContextTest {
         mockOkDownload();
 
         final DownloadTask[] tasks = new DownloadTask[2];
-        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1").build());
-        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1").build());
+        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1",null).build());
+        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1",null).build());
         DownloadTask task = tasks[0];
         when(task.isAutoCallbackToUIThread()).thenReturn(true);
         task = tasks[1];
@@ -200,8 +200,8 @@ public class DownloadContextTest {
 
         // without queue listener
         final DownloadTask[] tasks = new DownloadTask[2];
-        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1").build());
-        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1").build());
+        tasks[0] = spy(new DownloadTask.Builder("url1", "path", "filename1",null).build());
+        tasks[1] = spy(new DownloadTask.Builder("url2", "path", "filename1",null).build());
 
         context = spy(new DownloadContext(tasks, null, queueSet));
         doAnswer(new Answer() {
@@ -237,8 +237,8 @@ public class DownloadContextTest {
 
         // with queue listener
         final DownloadTask[] tasks = new DownloadTask[2];
-        tasks[0] = new DownloadTask.Builder("url1", "path", "filename1").build();
-        tasks[1] = new DownloadTask.Builder("url2", "path", "filename1").build();
+        tasks[0] = new DownloadTask.Builder("url1", "path", "filename1",null).build();
+        tasks[1] = new DownloadTask.Builder("url2", "path", "filename1",null).build();
 
         context = spy(new DownloadContext(tasks, queueListener, queueSet));
         doNothing().when(context).executeOnSerialExecutor(any(Runnable.class));

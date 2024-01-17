@@ -595,9 +595,9 @@ public class DownloadTaskAdapter implements BaseDownloadTask, BaseDownloadTask.I
             }
             @NonNull DownloadTask.Builder builder;
             if (pathAsDirectory) {
-                builder = new DownloadTask.Builder(url, path, null);
+                builder = new DownloadTask.Builder(url, path, null,null);
             } else {
-                builder = new DownloadTask.Builder(url, new File(path));
+                builder = new DownloadTask.Builder(url, new File(path),null);
             }
             builder.setMinIntervalMillisCallbackProcess(minIntervalMillisCallbackProgress);
             builder.setPassIfAlreadyCompleted(!forceReDownload);

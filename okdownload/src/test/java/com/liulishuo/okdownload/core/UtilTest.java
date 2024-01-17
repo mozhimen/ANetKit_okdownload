@@ -211,7 +211,7 @@ public class UtilTest {
 
     @Test
     public void createDefaultDatabase() throws Exception {
-        Util.createDefaultDatabase(mock(Context.class));
+        Util.createDefaultDatabase(mock(Context.class),null);
     }
 
     @Test

@@ -126,7 +126,7 @@ public class BreakpointStoreOnCacheTest {
     public void update() {
         createAndInsert();
 
-        BreakpointInfo newOne = new BreakpointInfo(insertedId, "", new File(""), "newOne");
+        BreakpointInfo newOne = new BreakpointInfo(insertedId, "", new File(""), "newOne",null);
 
         // replace
         storeOnCache.update(newOne);

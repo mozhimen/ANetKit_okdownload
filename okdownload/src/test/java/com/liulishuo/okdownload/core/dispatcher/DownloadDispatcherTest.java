@@ -416,7 +416,7 @@ public class DownloadDispatcherTest {
     @Test
     public void cancel_withId() {
         doReturn(true).when(dispatcher).cancelLocked(any(IdentifiedTask.class));
-        dispatcher.cancel(1);
+        dispatcher.cancel(1,null);
         final ArgumentCaptor<IdentifiedTask> captor = ArgumentCaptor.forClass(IdentifiedTask.class);
         verify(dispatcher).cancelLocked(captor.capture());
         assertThat(captor.getValue().getId()).isEqualTo(1);
