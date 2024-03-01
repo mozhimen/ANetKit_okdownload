@@ -62,6 +62,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class Util {
 
+    private static final String TAG = "Util>>>>>";
     // request method
     public static final String METHOD_HEAD = "HEAD";
 
@@ -260,6 +261,7 @@ public class Util {
         try {
             final Constructor constructor = Class.forName(storeOnSqliteClassName)
                     .getDeclaredConstructor(Context.class, IBreakpointCompare.class);
+            Log.w(TAG, "createDefaultDatabase: 初始化断点存储器 BreakpointStoreOnSQLite" );
             return (DownloadStore) constructor.newInstance(context, breakpointCompare);
         } catch (ClassNotFoundException ignored) {
         } catch (InstantiationException ignored) {
@@ -268,6 +270,7 @@ public class Util {
         } catch (InvocationTargetException ignored) {
         }
 
+        Log.w(TAG, "createDefaultDatabase: 初始化断点存储器 BreakpointStoreOnCache" );
         return new BreakpointStoreOnCache();
     }
 

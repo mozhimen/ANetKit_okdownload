@@ -16,6 +16,8 @@
 
 package com.liulishuo.okdownload.core;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -27,6 +29,7 @@ public abstract class IdentifiedTask {
 
     public static final String EMPTY_URL = "";
     public static final File EMPTY_FILE = new File("");
+    private static final String TAG = "IdentifiedTask>>>>>";
 
     public abstract int getId();
 
@@ -49,9 +52,17 @@ public abstract class IdentifiedTask {
         if (getBreakCompare() != null) {
             String currentUrl = getBreakCompare().onCompareUrl(getUrl());
             String anotherUrl = getBreakCompare().onCompareUrl(another.getUrl());
-            if (!currentUrl.equals(anotherUrl)) return false;
+            if (!currentUrl.equals(anotherUrl)) {
+                Log.d(TAG, "isSameFrom: breakpointCompare currentUrl.equals false");
+                Log.d(TAG, "isSameFrom: currentUrl " + currentUrl);
+                Log.d(TAG, "isSameFrom: anotherUrl " + anotherUrl);
+                return false;
+            }
         } else {
-            if (!getUrl().equals(another.getUrl())) return false;
+            if (!getUrl().equals(another.getUrl())) {
+                Log.d(TAG, "isSameFrom: url.equals false");
+                return false;
+            }
         }
 
         if (getUrl().equals(EMPTY_URL) || getParentFile().equals(EMPTY_FILE)) return false;

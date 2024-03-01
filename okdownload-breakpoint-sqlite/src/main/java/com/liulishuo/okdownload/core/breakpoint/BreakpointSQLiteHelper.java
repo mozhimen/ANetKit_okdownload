@@ -26,6 +26,7 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.liulishuo.okdownload.core.exception.SQLiteException;
@@ -52,6 +53,7 @@ import static com.liulishuo.okdownload.core.breakpoint.BreakpointSQLiteKey.URL;
 @SuppressLint("Range")
 public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = "BreakpointSQLiteHelper>>>>>";
     private static final String NAME = "okdownload-breakpoint.db";
     private static final int VERSION = 3;
 
@@ -129,6 +131,7 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
         return dirtyFileList;
     }
 
+    @SuppressLint("LongLogTag")
     public SparseArray<BreakpointInfo> loadToCache(IBreakpointCompare breakpointCompare) {
         Cursor breakpointCursor = null;
         Cursor blockCursor = null;
@@ -169,7 +172,7 @@ public class BreakpointSQLiteHelper extends SQLiteOpenHelper {
             }
             breakpointInfoMap.put(info.id, info);
         }
-
+        Log.d(TAG, "loadToCache: " + breakpointInfoMap);
         return breakpointInfoMap;
     }
 

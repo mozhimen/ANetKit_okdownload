@@ -234,10 +234,10 @@ public class BreakpointInfo {
         if (breakpointCompare != null) {
             String currentUrl = breakpointCompare.onCompareUrl(url);
             String taskUrl = breakpointCompare.onCompareUrl(task.getUrl());
+            Log.d(TAG, "isSameFrom: currentUrl " + currentUrl);
+            Log.d(TAG, "isSameFrom: taskUrl___ " + taskUrl);
             if (!currentUrl.equals(taskUrl)) {
                 Log.d(TAG, "isSameFrom: breakpointCompare currentUrl.equals false");
-                Log.d(TAG, "isSameFrom: currentUrl " + currentUrl);
-                Log.d(TAG, "isSameFrom: taskUrl___ " + taskUrl);
                 return false;
             }
         } else {
@@ -249,7 +249,7 @@ public class BreakpointInfo {
 
         final String otherFilename = task.getFilename();
         if (otherFilename != null && otherFilename.equals(filenameHolder.get())) {
-            Log.d(TAG, "isSameFrom: otherFilename.equals true");
+            Log.w(TAG, "isSameFrom: otherFilename.equals true");
             return true;
         }
 
