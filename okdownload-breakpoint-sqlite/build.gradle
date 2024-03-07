@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.liulishuo.okdownload.breakpoint.sqlite"
     compileSdk 34
 
     compileOptions {
