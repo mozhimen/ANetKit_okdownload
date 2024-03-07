@@ -27,6 +27,7 @@ android {
             abortOnError false
         }
     }
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
