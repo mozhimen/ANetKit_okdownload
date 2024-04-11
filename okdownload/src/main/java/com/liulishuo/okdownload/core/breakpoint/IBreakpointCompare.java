@@ -20,7 +20,6 @@ package com.liulishuo.okdownload.core.breakpoint;
  * @ClassName IBreakpointCompare
  * @Description TODO
  * @Author Mozhimen / Kolin Zhao
- * @Date 2023/12/31 9:47
  * @Version 1.0
  */
 public interface IBreakpointCompare {
