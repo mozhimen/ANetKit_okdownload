@@ -17,6 +17,7 @@
 package com.liulishuo.okdownload.sample
 
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import com.liulishuo.okdownload.DownloadListener
 import com.liulishuo.okdownload.core.listener.DownloadListener1
 import com.liulishuo.okdownload.core.listener.DownloadListener2
@@ -64,7 +65,7 @@ class ListenerSample {
         private const val TAG = "ListenerSample"
 
         private fun log(msg: String) {
-            Log.d(TAG, msg)
+            UtilKLogWrapper.d(TAG, msg)
         }
     }
 }

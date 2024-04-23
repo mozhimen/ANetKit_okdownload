@@ -19,6 +19,7 @@ package com.liulishuo.okdownload.sample
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -96,7 +97,7 @@ class SingleActivity : BaseSampleActivity() {
         }
         statusTv.text = status.toString()
         StatusUtil.getCurrentInfo(it)?.let { info ->
-            Log.d(TAG, "init status with: $info")
+            UtilKLogWrapper.d(TAG, "init status with: $info")
             DemoUtil.calcProgressToView(progressBar, info.totalOffset, info.totalLength)
         }
     }
@@ -160,11 +161,11 @@ class SingleActivity : BaseSampleActivity() {
             if (cause == EndCause.COMPLETED) {
                 val realMd5 = fileToMD5(task.file!!.absolutePath)
                 if (!realMd5!!.equals("f836a37a5eee5dec0611ce15a76e8fd5", ignoreCase = true)) {
-                    Log.e(TAG, "file is wrong because of md5 is wrong $realMd5")
+                    UtilKLogWrapper.e(TAG, "file is wrong because of md5 is wrong $realMd5")
                 }
             }
             realCause?.let {
-                Log.e(TAG, "download error", it)
+                UtilKLogWrapper.e(TAG, "download error", it)
             }
         }
 
@@ -216,7 +217,7 @@ class SingleActivity : BaseSampleActivity() {
                     try {
                         inputStream.close()
                     } catch (e: Exception) {
-                        Log.e(TAG, "file to md5 failed", e)
+                        UtilKLogWrapper.e(TAG, "file to md5 failed", e)
                     }
                 }
             }

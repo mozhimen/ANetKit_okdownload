@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.support.annotation.IdRes
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RadioButton
@@ -99,7 +100,7 @@ class BunchActivity : BaseSampleActivity() {
                     .setParentPathFile(bunchDir)
                     .setMinIntervalMillisCallbackProcess(300)
                     .commit()
-                Log.d(
+                UtilKLogWrapper.d(
                     "BunchActivity",
                     "before bind bunch task consume ${SystemClock.uptimeMillis() - startTime} ms"
                 )
@@ -118,7 +119,7 @@ class BunchActivity : BaseSampleActivity() {
                 }).build()
 
                 speedCalculator = SpeedCalculator()
-                Log.d(
+                UtilKLogWrapper.d(
                     "BunchActivity",
                     "before bunch task consume ${SystemClock.uptimeMillis() - startTime} ms"
                 )
@@ -155,7 +156,7 @@ class BunchActivity : BaseSampleActivity() {
                 deleteContainerView?.isEnabled = false
                 radioGroup?.isEnabled = false
                 startOrCancelTv?.setText(R.string.cancel)
-                Log.d(
+                UtilKLogWrapper.d(
                     "BunchActivity",
                     "start bunch task consume ${SystemClock.uptimeMillis() - startTime} ms"
                 )
@@ -170,13 +171,13 @@ class BunchActivity : BaseSampleActivity() {
             if (children != null) {
                 for (child in children) {
                     if (!File(bunchDir, child).delete()) {
-                        Log.w("BunchActivity", "delete $child failed!")
+                        UtilKLogWrapper.w("BunchActivity", "delete $child failed!")
                     }
                 }
             }
 
             if (!bunchDir.delete()) {
-                Log.w("BunchActivity", "delete $bunchDir failed!")
+                UtilKLogWrapper.w("BunchActivity", "delete $bunchDir failed!")
             }
         }
     }

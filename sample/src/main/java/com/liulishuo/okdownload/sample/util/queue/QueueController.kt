@@ -18,6 +18,7 @@ package com.liulishuo.okdownload.sample.util.queue
 
 import android.content.Context
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.widget.SeekBar
 
 import com.liulishuo.okdownload.DownloadContext
@@ -96,13 +97,13 @@ class QueueController {
             if (children != null) {
                 for (child in children) {
                     if (!File(queueDir, child).delete()) {
-                        Log.w("QueueController", "delete $child failed!")
+                        UtilKLogWrapper.w("QueueController", "delete $child failed!")
                     }
                 }
             }
 
             if (!queueDir!!.delete()) {
-                Log.w("QueueController", "delete $queueDir failed!")
+                UtilKLogWrapper.w("QueueController", "delete $queueDir failed!")
             }
         }
 
@@ -136,7 +137,7 @@ class QueueController {
 
     internal fun bind(holder: QueueViewHolder, position: Int) {
         val task = taskList[position]
-        Log.d(TAG, "bind " + position + " for " + task.url)
+        UtilKLogWrapper.d(TAG, "bind " + position + " for " + task.url)
 
         listener.bind(task, holder)
         listener.resetInfo(task, holder)
