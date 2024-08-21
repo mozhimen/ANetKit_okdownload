@@ -16,7 +16,7 @@ subprojects {
 
 buildscript {
     repositories {
-        gradlePluginPortal()
+//        gradlePluginPortal()
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }

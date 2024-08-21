@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.main.iml" filepath="$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/benchmark/ANetKit_okdownload.benchmark.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload/ANetKit_okdownload.okdownload.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload/ANetKit_okdownload.okdownload.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.main.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-breakpoint-sqlite/ANetKit_okdownload.okdownload-breakpoint-sqlite.main.iml" />
@@ -20,9 +19,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.main.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-filedownloader/ANetKit_okdownload.okdownload-filedownloader.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.main.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-kotlin-enhance/ANetKit_okdownload.okdownload-kotlin-enhance.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-process/ANetKit_okdownload.okdownload-process.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-process/ANetKit_okdownload.okdownload-process.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload-process/ANetKit_okdownload.okdownload-process.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload-process/ANetKit_okdownload.okdownload-process.androidTest.iml" />
@@ -33,11 +30,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload/ANetKit_okdownload.okdownload.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload/ANetKit_okdownload.okdownload.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.main.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/okdownload_ext/ANetKit_okdownload.okdownload_ext.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sample/ANetKit_okdownload.sample.unitTest.iml" />
     </modules>
   </component>
