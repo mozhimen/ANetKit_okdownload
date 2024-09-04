@@ -19,7 +19,7 @@ package com.liulishuo.okdownload.sample
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView

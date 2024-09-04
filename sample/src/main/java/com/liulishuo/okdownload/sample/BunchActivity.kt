@@ -22,7 +22,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.support.annotation.IdRes
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RadioButton

@@ -18,7 +18,7 @@ package com.liulishuo.okdownload.sample.util.queue
 
 import android.content.Context
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.widget.SeekBar
 
 import com.liulishuo.okdownload.DownloadContext

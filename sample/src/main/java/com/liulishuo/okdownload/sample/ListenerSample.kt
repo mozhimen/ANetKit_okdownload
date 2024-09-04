@@ -17,7 +17,7 @@
 package com.liulishuo.okdownload.sample
 
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.liulishuo.okdownload.DownloadListener
 import com.liulishuo.okdownload.core.listener.DownloadListener1
 import com.liulishuo.okdownload.core.listener.DownloadListener2
