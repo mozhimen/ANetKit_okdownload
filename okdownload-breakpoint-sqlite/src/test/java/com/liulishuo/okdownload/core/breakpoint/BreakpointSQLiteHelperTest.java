@@ -65,13 +65,13 @@ public class BreakpointSQLiteHelperTest {
         initMocks(this);
 
         helper = spy(new BreakpointSQLiteHelper(application));
-        final BreakpointInfo info1 = new BreakpointInfo(1, "url1", new File("p-path1"), null);
+        final BreakpointInfo info1 = new BreakpointInfo(1, "url1", new File("p-path1"), null,null);
         info1.addBlock(new BlockInfo(0, 10));
         helper.insert(info1);
         insertedInfo1 = info1;
 
         final BreakpointInfo info2 = new BreakpointInfo(2, "url2", new File("p-path2"),
-                "filename2");
+                "filename2",null);
         info2.addBlock(new BlockInfo(0, 20));
         info2.addBlock(new BlockInfo(20, 20, 10));
         helper.insert(info2);
@@ -138,7 +138,7 @@ public class BreakpointSQLiteHelperTest {
 
     @Test
     public void loadToCacheAndInsert() {
-        final SparseArray<BreakpointInfo> infoSparseArray = helper.loadToCache();
+        final SparseArray<BreakpointInfo> infoSparseArray = helper.loadToCache(null);
         assertThat(infoSparseArray.size()).isEqualTo(2);
 
         final BreakpointInfo info1 = infoSparseArray.get(insertedInfo1.id);
@@ -177,18 +177,18 @@ public class BreakpointSQLiteHelperTest {
         assertThat(insertedInfo2.getBlock(1).getCurrentOffset()).isEqualTo(10);
         helper.updateBlockIncrease(insertedInfo2, 1, 15);
 
-        BreakpointInfo info2 = helper.loadToCache().get(insertedInfo2.id);
+        BreakpointInfo info2 = helper.loadToCache(null).get(insertedInfo2.id);
         assertThat(info2.getBlock(1).getCurrentOffset()).isEqualTo(15);
     }
 
     @Test
     public void updateInfo() throws IOException {
-        BreakpointInfo info1 = helper.loadToCache().get(insertedInfo1.id);
+        BreakpointInfo info1 = helper.loadToCache(null).get(insertedInfo1.id);
         assertThat(info1.getEtag()).isNull();
         info1.setEtag("new-etag");
         helper.updateInfo(info1);
 
-        info1 = helper.loadToCache().get(info1.id);
+        info1 = helper.loadToCache(null).get(info1.id);
         assertThat(info1.getEtag()).isEqualTo("new-etag");
 
     }
@@ -197,7 +197,7 @@ public class BreakpointSQLiteHelperTest {
     public void removeInfo() {
         helper = spy(helper);
         helper.removeInfo(insertedInfo2.id);
-        final SparseArray<BreakpointInfo> infoSparseArray = helper.loadToCache();
+        final SparseArray<BreakpointInfo> infoSparseArray = helper.loadToCache(null);
         assertThat(infoSparseArray.size()).isEqualTo(1);
         assertThat(infoSparseArray.get(infoSparseArray.keyAt(0)).id).isEqualTo(insertedInfo1.id);
 
@@ -209,7 +209,7 @@ public class BreakpointSQLiteHelperTest {
         assertThat(insertedInfo2.getBlockCount()).isEqualTo(2);
         helper.removeBlock(insertedInfo2.id);
 
-        assertThat(helper.loadToCache().get(insertedInfo2.id).getBlockCount()).isZero();
+        assertThat(helper.loadToCache(null).get(insertedInfo2.id).getBlockCount()).isZero();
     }
 
 }
