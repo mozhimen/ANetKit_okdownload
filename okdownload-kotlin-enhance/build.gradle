@@ -4,6 +4,7 @@ apply plugin: 'org.jetbrains.dokka'
 
 android {
     compileSdk 34
+	namespace "com.liulishuo.okdownload.kotlin"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

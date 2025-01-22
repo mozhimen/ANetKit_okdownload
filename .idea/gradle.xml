@@ -4,10 +4,20 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../ALibKit_Google" />
+            <option value="$PROJECT_DIR$/../ALibKit_Google/material" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetbrains" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetbrains/kotlin_stdlib" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetbrains/kotlinx_coroutines" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetpack" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetpack/annotation" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetpack/core" />
+            <option value="$PROJECT_DIR$/../ALibKit_Jetpack/databinding" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/benchmark" />
             <option value="$PROJECT_DIR$/okdownload" />
@@ -18,6 +28,11 @@
             <option value="$PROJECT_DIR$/okdownload-process" />
             <option value="$PROJECT_DIR$/okdownload_ext" />
             <option value="$PROJECT_DIR$/sample" />
+            <option value="$PROJECT_DIR$/../ASwiftKit" />
+            <option value="$PROJECT_DIR$/../ASwiftKit/basick" />
+            <option value="$PROJECT_DIR$/../KUtilKit" />
+            <option value="$PROJECT_DIR$/../KUtilKit/android" />
+            <option value="$PROJECT_DIR$/../KUtilKit/kotlin" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

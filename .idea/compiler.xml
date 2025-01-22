@@ -11,6 +11,23 @@
       <entry name="!?*.kt" />
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="ANetKit_okdownload.ALibKit_Google.material" target="21" />
+      <module name="ANetKit_okdownload.ALibKit_Jetbrains.kotlin_stdlib" target="21" />
+      <module name="ANetKit_okdownload.ALibKit_Jetbrains.kotlinx_coroutines" target="21" />
+      <module name="ANetKit_okdownload.ALibKit_Jetpack.annotation" target="21" />
+      <module name="ANetKit_okdownload.ALibKit_Jetpack.core" target="21" />
+      <module name="ANetKit_okdownload.ALibKit_Jetpack.databinding" target="21" />
+      <module name="ANetKit_okdownload.ASwiftKit.basick" target="21" />
+      <module name="ANetKit_okdownload.benchmark" target="21" />
+      <module name="ANetKit_okdownload.okdownload" target="21" />
+      <module name="ANetKit_okdownload.okdownload-breakpoint-sqlite" target="21" />
+      <module name="ANetKit_okdownload.okdownload-connection-okhttp" target="21" />
+      <module name="ANetKit_okdownload.okdownload-filedownloader" target="21" />
+      <module name="ANetKit_okdownload.okdownload-kotlin-enhance" target="21" />
+      <module name="ANetKit_okdownload.okdownload-process" target="21" />
+      <module name="ANetKit_okdownload.okdownload_ext" target="21" />
+      <module name="ANetKit_okdownload.sample" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>

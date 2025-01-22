@@ -18,6 +18,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdk 34
+	namespace "cn.dreamtobe.okdownload.filedownloader"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

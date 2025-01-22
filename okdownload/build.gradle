@@ -8,6 +8,7 @@ android {
         minSdk 14
 //        versionName VERSION_NAME as String
         buildConfigField("String", "VERSION_NAME", "\"${VERSION_NAME}\"")
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     compileOptions {
@@ -34,7 +35,7 @@ dependencies {
 //    implementation "com.android.support:support-annotations:28.0.0"
 //    implementation 'org.jetbrains:annotations:15.0'
     compileOnly "com.google.code.findbugs:annotations:3.0.1"
-    implementation 'androidx.annotation:annotation:1.4.0'
+    api project(':ALibKit_Jetpack:annotation')
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.10.0'
