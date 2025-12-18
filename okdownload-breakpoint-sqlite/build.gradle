@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     namespace "com.liulishuo.okdownload.breakpoint.sqlite"
-    compileSdk 34
+    compileSdk 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
