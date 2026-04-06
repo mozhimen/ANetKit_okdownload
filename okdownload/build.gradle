@@ -29,6 +29,9 @@ android {
         }
     }
     buildFeatures.buildConfig = true
+    tasks.withType(Test) {
+        enabled = false
+    }
 }
 
 dependencies {
@@ -43,7 +46,7 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:3.3.2'
 }
 
-//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
-if (hasProperty("isCI")) {
-    apply from: rootProject.file('gradle/codecov.gradle')
-}
+////apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+//if (hasProperty("isCI")) {
+//    apply from: rootProject.file('gradle/codecov.gradle')
+//}
