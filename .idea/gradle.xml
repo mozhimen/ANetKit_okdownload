@@ -14,10 +14,10 @@
             <option value="$PROJECT_DIR$/okdownload" />
             <option value="$PROJECT_DIR$/okdownload-breakpoint-sqlite" />
             <option value="$PROJECT_DIR$/okdownload-connection-okhttp" />
+            <option value="$PROJECT_DIR$/okdownload-ext" />
             <option value="$PROJECT_DIR$/okdownload-filedownloader" />
             <option value="$PROJECT_DIR$/okdownload-kotlin-enhance" />
             <option value="$PROJECT_DIR$/okdownload-process" />
-            <option value="$PROJECT_DIR$/okdownload_ext" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
         </option>
