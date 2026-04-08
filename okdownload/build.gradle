@@ -29,16 +29,13 @@ android {
         }
     }
     buildFeatures.buildConfig = true
-    tasks.withType(Test) {
-        enabled = false
-    }
 }
 
 dependencies {
 //    implementation "com.android.support:support-annotations:28.0.0"
 //    implementation 'org.jetbrains:annotations:15.0'
     compileOnly "com.google.code.findbugs:annotations:3.0.1"
-    api project(':ALibKit_Jetpack:annotation')
+    api 'com.github.mozhimen.ALibKit_Jetpack:annotation:0.0.7'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.10.0'

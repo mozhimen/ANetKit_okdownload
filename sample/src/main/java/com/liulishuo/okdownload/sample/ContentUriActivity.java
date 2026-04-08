@@ -20,12 +20,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.SpeedCalculator;
 import com.liulishuo.okdownload.core.breakpoint.BreakpointInfo;
@@ -115,7 +115,7 @@ public class ContentUriActivity extends BaseSampleActivity {
     }
 
     private void handleUri(Uri uri) {
-        DownloadTask task = new DownloadTask.Builder(DemoUtil.URL, uri)
+        DownloadTask task = new DownloadTask.Builder(DemoUtil.URL, uri,null)
                 .setMinIntervalMillisCallbackProcess(300)
                 .build();
         this.task = task;

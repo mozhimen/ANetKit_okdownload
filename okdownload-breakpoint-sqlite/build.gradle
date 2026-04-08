@@ -26,7 +26,7 @@ android {
 
 dependencies {
 //    implementation "com.android.support:support-annotations:28.0.0"
-    implementation project(":ALibKit_Jetpack:annotation")
+    implementation 'com.github.mozhimen.ALibKit_Jetpack:annotation:0.0.7'
 
     compileOnly project(project.path.replace(project.name, '') + ':okdownload')
 

@@ -128,7 +128,7 @@ public class EachBlockProgressActivity extends BaseSampleActivity {
     private DownloadTask createTask(String url) {
         final String filename = "each-block-progress-test";
         final File parentFile = DemoUtil.getParentFile(this);
-        return new DownloadTask.Builder(url, parentFile)
+        return new DownloadTask.Builder(url, parentFile,null)
                 .setFilename(filename)
                 // the minimal interval millisecond for callback progress
                 .setMinIntervalMillisCallbackProcess(64)
@@ -303,7 +303,7 @@ public class EachBlockProgressActivity extends BaseSampleActivity {
 
 
             @Override public void taskEnd(@NonNull DownloadTask task, @NonNull EndCause cause,
-                                          @android.support.annotation.Nullable Exception realCause,
+                                          @Nullable Exception realCause,
                                           @NonNull SpeedCalculator taskSpeed) {
                 statusTv.setText(cause.toString());
                 taskSpeedTv.setText(taskSpeed.averageSpeed());

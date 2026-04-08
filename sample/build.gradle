@@ -6,11 +6,6 @@ android {
     namespace "com.liulishuo.okdownload.sample"
     compileSdk 35
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     defaultConfig {
         applicationId "com.liulishuo.okdownload.sample"
         // using 19, because we demo for content-uri(CATEGORY_OPENABLE)
@@ -38,34 +33,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
-    //noinspection GradleDependency source code is not available on 26
-    implementation "com.android.support:design:28.0.0"
-    //noinspection GradleDependency source code is not available on 26
-    implementation "com.android.support:appcompat-v7:28.0.0"
-    // Appcompat-v7 (only Anko Commons)
+    implementation 'com.github.mozhimen.ASwiftKit:basick:2.0.3'
     implementation "org.jetbrains.anko:anko-sdk25:0.10.1"
     implementation "org.jetbrains.anko:anko-appcompat-v7-commons:0.10.1"
-    // Appcompat-v7 (Anko Layouts)
     implementation "org.jetbrains.anko:anko-appcompat-v7-commons:0.10.1"
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:0.10.1"
     implementation "org.jetbrains.anko:anko-coroutines:0.10.1"
-    // CardView-v7
     implementation "org.jetbrains.anko:anko-cardview-v7:0.10.1"
-    //noinspection GradleDependency
-    implementation "com.android.support:cardview-v7:28.0.0"
-    // Design
     implementation "org.jetbrains.anko:anko-design:0.10.1"
     implementation "org.jetbrains.anko:anko-design-coroutines:0.10.1"
-    // RecyclerView-v7
     implementation "org.jetbrains.anko:anko-recyclerview-v7:0.10.1"
     implementation "org.jetbrains.anko:anko-recyclerview-v7-coroutines:0.10.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
-    implementation "com.android.support.constraint:constraint-layout:1.0.2"
 
     implementation project(':okdownload')
     implementation project(':okdownload-breakpoint-sqlite')

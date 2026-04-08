@@ -1,27 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 //apply plugin: 'kotlin-android-extensions'
 android {
 	namespace "com.liulishuo.okdownload.benchmark"
     compileSdk 35
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    lintOptions {
-        lintConfig file('lint.xml')
-        textOutput 'stdout'
-        textReport true
-    }
-
     defaultConfig {
         applicationId "com.liulishuo.okdownload.benchmark"
-        minSdk 14
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -33,20 +24,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    lintOptions {
+        lintConfig file('lint.xml')
+        textOutput 'stdout'
+        textReport true
+    }
+    buildFeatures{
+        dataBinding true
+    }
 }
 
 dependencies {
-//    implementation project('')
 //    implementation dep.kotlin
-//
-    implementation "com.android.support:appcompat-v7:28.0.0"
-    implementation "com.android.support.constraint:constraint-layout:1.0.2"
-    implementation "com.android.support:design:28.0.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
-
 //    implementation dep.supportV7
 //    implementation dep.supportDesign
 //    implementation dep.supportConstraintLayout
+
+    implementation 'com.github.mozhimen.ASwiftKit:basick:2.0.3'
+    implementation 'com.github.mozhimen.ASwiftKit:uik-databinding:2.0.3'
 
     testImplementation 'junit:junit:4.12'
 }

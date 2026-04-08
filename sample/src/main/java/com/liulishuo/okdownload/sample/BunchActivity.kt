@@ -20,14 +20,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.os.SystemClock
-import android.support.annotation.IdRes
-import android.util.Log
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.annotation.IdRes
 import com.liulishuo.okdownload.DownloadContext
 import com.liulishuo.okdownload.DownloadTask
 import com.liulishuo.okdownload.SpeedCalculator
@@ -105,7 +104,7 @@ class BunchActivity : BaseSampleActivity() {
                     "before bind bunch task consume ${SystemClock.uptimeMillis() - startTime} ms"
                 )
                 for (i in urls.indices) {
-                    builder.bind(urls[i]).addTag(INDEX_TAG, i)
+                    builder.bind(urls[i],null).addTag(INDEX_TAG, i)
                 }
 
                 totalCount = urls.size

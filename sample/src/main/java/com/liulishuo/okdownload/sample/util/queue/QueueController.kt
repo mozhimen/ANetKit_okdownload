@@ -17,8 +17,6 @@
 package com.liulishuo.okdownload.sample.util.queue
 
 import android.content.Context
-import android.util.Log
-import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.widget.SeekBar
 
 import com.liulishuo.okdownload.DownloadContext
@@ -27,6 +25,7 @@ import com.liulishuo.okdownload.DownloadTask
 import com.liulishuo.okdownload.sample.R
 import com.liulishuo.okdownload.sample.util.DemoUtil
 import com.liulishuo.okdownload.sample.util.queue.QueueRecyclerAdapter.QueueViewHolder
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import java.io.File
 
 class QueueController {
@@ -46,44 +45,44 @@ class QueueController {
         val builder = set.commit()
 
         var url = "http://dldir1.qq.com/weixin/android/weixin6516android1120.apk"
-        var boundTask = builder.bind(url)
+        var boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "1. WeChat")
 
         url = "https://cdn.llscdn.com/yy/files/tkzpx40x-lls-LLS-5.7-785-20171108-111118.apk"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "2. LiuLiShuo")
 
         url = "https://t.alipayobjects.com/L1/71/100/and/alipay_wap_main.apk"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "3. Alipay")
 
         url = "https://dldir1.qq.com/qqfile/QQforMac/QQ_V6.2.0.dmg"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "4. QQ for Mac")
 
         val zhiHuApkHome = "https://zhstatic.zhihu.com/pkg/store/zhihu"
         url = "$zhiHuApkHome/futureve-mobile-zhihu-release-5.8.2(596).apk"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "5. ZhiHu")
 
         url = "http://d1.music.126.net/dmusic/CloudMusic_official_4.3.2.468990.apk"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "6. NetEaseMusic")
 
         url = "http://d1.music.126.net/dmusic/NeteaseMusic_1.5.9_622_officialsite.dmg"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "7. NetEaseMusic for Mac")
 
         url = "http://dldir1.qq.com/weixin/Windows/WeChatSetup.exe"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "8. WeChat for Windows")
 
         url = "https://dldir1.qq.com/foxmail/work_weixin/wxwork_android_2.4.5.5571_100001.apk"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "9. WeChat Work")
 
         url = "https://dldir1.qq.com/foxmail/work_weixin/WXWork_2.4.5.213.dmg"
-        boundTask = builder.bind(url)
+        boundTask = builder.bind(url,null)
         TagUtil.saveTaskName(boundTask, "10. WeChat Work for Mac")
 
         builder.setListener(listener)
